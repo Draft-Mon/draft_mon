@@ -113,7 +113,7 @@ function getTrainerAvatarHTML(trainer){
   const spriteName = trainer.masterType && TYPE_MASTER_SPRITE[trainer.masterType];
   if(!spriteName) return phIcon(trainer.emoji);
   const url = `https://play.pokemonshowdown.com/sprites/trainers/${spriteName}.png`;
-  return `<img src="${url}" alt="${trainer.name}" class="trainer-sprite-img" data-fallback-emoji="${trainer.emoji}" onerror="handleTrainerSpriteError(this)">`;
+  return `<img src="${url}" alt="${trainer.name.replace(/<[^>]*>/g,'').trim()}" class="trainer-sprite-img" data-fallback-emoji="${trainer.emoji}" onerror="handleTrainerSpriteError(this)">`;
 }
 
 // Filtre les archétypes de dresseur disponibles à cet étage (favorise les archétypes avancés en montant dans la Tour). Partagé par generateTrainer et generateTwinTrainers.

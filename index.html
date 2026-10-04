@@ -23,7 +23,10 @@
   </div>
 
   <div class="panel" id="screenMenu">
-    <button class="menu-splash" id="splashTextBtn">Gen 3 is here!!!</button>
+    <div class="menu-hero">
+      <img class="menu-banner" src="assets/image/logo/Draft_mon_banner.png" alt="Draft Mon — Tour de Combat" width="1200" height="636">
+      <button class="menu-splash" id="splashTextBtn">Gen 3 is here!!!</button>
+    </div>
     <div class="menu-illustration" aria-hidden="true">
       <svg viewBox="0 0 400 300" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -72,10 +75,6 @@
       </svg>
     </div>
     <div class="menu-content">
-      <div style="margin:0 0 14px;">
-        <img src="assets/image/logo/Draft_mon_logo.png" alt="Logo Draft Mon" style="width:84px;height:auto;">
-      </div>
-      <div class="floor-label" style="letter-spacing:4px;font-size:11px;color:var(--text-dim);margin-bottom:6px;">Tour de Combat</div>
       <h1 class="menu-headline">Prêt à gravir la Tour ?</h1>
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:22px 0;">
         <button class="btn" id="menuPlayBtn">▶ Jouer</button>
@@ -83,6 +82,7 @@
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;">
         <button class="btn secondary" id="menuDexBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-book-open"></i> Pokédex</button>
+        <button class="btn secondary" id="menuTeamBuilderBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-wrench"></i> Builder d'équipe</button>
         <button class="btn secondary" id="menuPatchNotesBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-clipboard-text"></i> Notes de MàJ</button>
         <div id="menuTokensBadge" class="menu-tokens-pill"><i class="ph-bold ph-ticket"></i> 0 Jetons de Tour</div>
         <div id="menuCandyBadge" class="menu-tokens-pill"><i class="ph-bold ph-cookie"></i> 0 Bonbons d'Affinité</div>
@@ -126,6 +126,17 @@
       <button class="btn secondary" id="dexResetFilter" style="padding:6px 12px;font-size:11px;"><i class="ph-bold ph-x"></i> Reset</button>
     </div>
     <div class="draft-cards" id="dexGrid"></div>
+  </div>
+
+  <div class="panel hidden" id="screenTeamBuilder">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg-panel);z-index:10;">
+      <button class="btn" id="tbBackBtn" style="padding:8px 16px;font-size:11px;flex-shrink:0;width:auto;">← Menu</button>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:var(--font-display);font-size:13px;color:var(--accent-light);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">BUILDER D'ÉQUIPE</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="tbSub"></div>
+      </div>
+    </div>
+    <div id="tbRoot"></div>
   </div>
 
   <div class="panel hidden" id="screenDraft">
@@ -444,6 +455,8 @@
 <script src="pokemon/helpers.js"></script>
 <script src="pokemon/weights.js"></script>
 <script src="pokemon/competitive-sets.js"></script>
+<script src="pokemon/smogon-sets.js"></script>
+<script src="pokemon/showdown-names.js"></script>
 <script src="draft/draft-core.js"></script>
 <script src="draft/draft-classic.js"></script>
 <script src="draft/draft-facile.js"></script>
@@ -476,6 +489,7 @@
 <script src="ui/bag-modal.js"></script>
 <script src="ui/dex-viewer.js"></script>
 <script src="ui/patch-notes.js"></script>
+<script src="ui/team-builder.js"></script>
 <script>
   // Outils de développement : fichier local non versionné (*.local.js dans .gitignore), chargé seulement
   // en local (localhost, réseau privé, file://) pour ne pas provoquer d'erreur 404 en ligne.

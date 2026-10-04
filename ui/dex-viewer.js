@@ -33,6 +33,17 @@ function typeMatchupHTML(types){
   const row = (label, list) => list.length ? `<div style="margin-bottom:6px;"><span style="font-size:9px;color:var(--text-dim);display:block;margin-bottom:3px;">${label}</span><div class="types-row" style="justify-content:flex-start;">${list.map(t=>typeTagHTML(t)).join('')}</div></div>` : '';
   return `${row('×4 Faible', g[4])}${row('×2 Faible', g[2])}${row('×0.5 Résiste', g[0.5])}${row('×0.25 Résiste', g[0.25])}${row('Immunisé', g[0])}`;
 }
+// Pendant offensif de typeMatchupHTML : ce que les types du Pokémon (ses capacités STAB) donnent contre
+// chacun des 18 types en défense, en gardant pour chaque cible le meilleur de ses deux types.
+function typeOffenseHTML(types){
+  const groups = {2:[], 0.5:[], 0:[]};
+  Object.keys(TYPE_COLOR).forEach(d=>{
+    const best = Math.max(...types.map(t=>getMult(t, [d])));
+    if(groups[best]) groups[best].push(d);
+  });
+  const row = (label, list) => list.length ? `<div style="margin-bottom:6px;"><span style="font-size:9px;color:var(--text-dim);display:block;margin-bottom:3px;">${label}</span><div class="types-row" style="justify-content:flex-start;">${list.map(t=>typeTagHTML(t)).join('')}</div></div>` : '';
+  return `${row('×2 Super efficace', groups[2])}${row('×0.5 Peu efficace', groups[0.5])}${row('Sans effet', groups[0])}` || '<span style="font-size:9px;color:var(--text-dim);">Neutre contre tous les types.</span>';
+}
 // Les 5 pastilles de niveau d'affinité d'une lignée (pleines jusqu'au niveau actuel), avec le
 // multiplicateur de tirage en info-bulle. `size` en px (plus petit sur la carte, plus grand en fiche détail).
 function dexAffinityPipsHTML(lineId, size){
@@ -58,23 +69,38 @@ function renderDex(){
       ...line.stages.map((sp,i)=>({sp,stageIdx:i,isBranch:false,branchIdx:null})),
       ...(line.branches ? line.branches.map((sp,bi)=>({sp,stageIdx:null,isBranch:true,branchIdx:bi})) : [])
     ];
-    allStages.forEach(({sp, stageIdx, isBranch, branchIdx})=>{
+    allStages.forEach(({sp: baseSp, stageIdx, isBranch, branchIdx})=>{
+      // Chaque espèce est suivie de ses Méga-Évolutions (formes liées à une Méga-Gemme) puis, pour la
+      // forme finale d'une lignée de GIGAMAX_LINES, de sa forme Gigamax : des cartes à part entière avec
+      // leur propre rareté "Méga"/"Gigamax", jamais proposées au draft (ce ne sont pas des lignées).
+      const isFinalForm = isBranch || stageIdx===line.stages.length-1;
+      const variants = [{kind:'base', sp:baseSp}];
+      Object.keys(baseSp.forms||{}).filter(k=>ITEMS[k] && ITEMS[k].megaStone).forEach(k=> variants.push({kind:'mega', formKey:k, sp:baseSp.forms[k]}));
+      const gmaxId = (isFinalForm && typeof GIGAMAX_LINES!=='undefined' && GIGAMAX_LINES[line.id]) ? GIGAMAX_SPRITE_IDS[baseSp.name] : null;
+      if(gmaxId) variants.push({kind:'gigamax', formKey:'gigamax', spriteId:gmaxId, sp:{name:`${baseSp.name} Gigamax`, types:baseSp.types, base:baseSp.base}});
+      variants.forEach(({kind, formKey, spriteId, sp})=>{
       if(dexFilters.search && !sp.name.toLowerCase().includes(dexFilters.search.toLowerCase())) return;
       if(dexFilters.type && !sp.types.includes(dexFilters.type)) return;
       if(dexFilters.type2 && !sp.types.includes(dexFilters.type2)) return;
       // Une branche non-draftable (ex. Éthernatos Infinimax) n'est jamais une rareté en soi : elle
       // partage juste la rareté de sa lignée, sauf si elle est bloquée au tirage (voir buildFacileCandidates),
       // auquel cas elle affiche "Injouable" à la place (uniquement accessible via l'éditeur).
-      const isUndraftableBranch = isBranch && sp.draftable===false;
+      const isUndraftableBranch = isBranch && baseSp.draftable===false;
       if(dexFilters.rarity){
-        const key = isUndraftableBranch ? 'injouable' : rarityKey(line);
+        const key = kind!=='base' ? kind : (isUndraftableBranch ? 'injouable' : rarityKey(line));
         if(key !== dexFilters.rarity) return;
       }
       if(dexFilters.boosted && affinityLevel(line.id)<=0) return;
 
-      const rarity = isUndraftableBranch ? {label:'Injouable', css:'rarity-injouable'} : rarityInfo(line);
+      const rarity = kind==='mega' ? {label:'Méga', css:'rarity-mega'}
+        : kind==='gigamax' ? {label:'Gigamax', css:'rarity-gigamax'}
+        : isUndraftableBranch ? {label:'Injouable', css:'rarity-injouable'} : rarityInfo(line);
       let rateText;
-      if(isUndraftableBranch){
+      if(kind==='mega'){
+        rateText = `Non draftable — Méga-Évolution de ${baseSp.name} en combat (objet tenu : ${ITEMS[formKey].name})`;
+      } else if(kind==='gigamax'){
+        rateText = `Non draftable — forme Gigamax de ${baseSp.name} en combat (objet tenu : ${ITEMS.facteurGigamax.name})`;
+      } else if(isUndraftableBranch){
         rateText = `Non draftable — obtenue uniquement en faisant évoluer ${line.stages[0].name} depuis l'éditeur`;
       } else if(isBranch){
         rateText = `Forme à embranchement — obtenue en draft (mode Facile) ou en faisant évoluer ${line.stages[0].name}`;
@@ -88,7 +114,7 @@ function renderDex(){
       card.className='dex-card';
       card.innerHTML = `
         <span class="rarity-badge ${rarity.css}">${rarity.label}</span>
-        <div class="emoji">${getSpriteHTML(sp.name)}</div>
+        <div class="emoji">${getSpriteHTML(kind==='gigamax' ? baseSp.name : sp.name, null, 'front', false, false, spriteId)}</div>
         <div class="pname">${sp.name}</div>
         <div class="types-row">${sp.types.map(t=>typeTagHTML(t)).join('')}</div>
         <div class="stat-line">PV ${sp.base.hp} · Atq ${sp.base.atk} · Déf ${sp.base.def}</div>
@@ -100,13 +126,14 @@ function renderDex(){
       // peut le remplacer (sélection libre d'équipe) — mais seulement quand il le veut vraiment, sinon la
       // fiche détail reste disponible même avec les outils de dev chargés.
       card.style.cursor = 'pointer';
-      card.onclick = ()=> openDexDetail(line, isBranch ? null : stageIdx, isBranch ? branchIdx : null);
-      if(window.DEV_HOOKS){
+      card.onclick = ()=> openDexDetail(line, isBranch ? null : stageIdx, isBranch ? branchIdx : null, kind==='base' ? null : formKey);
+      if(window.DEV_HOOKS && kind==='base'){
         const entry = { lineId: line.id, stage: isBranch ? line.stages.length-1 : stageIdx, branch: isBranch ? branchIdx : null };
         window.DEV_HOOKS.decorateDexCard(card, sp, entry);
       }
       grid.appendChild(card);
       count++;
+      });
     });
   });
 
@@ -136,7 +163,8 @@ const DEX_RARITY_OPTIONS = [
   {value:'commun', label:'Commun', css:'rarity-commun'},{value:'peucommun', label:'Peu Commun', css:'rarity-peucommun'},
   {value:'rare', label:'Rare', css:'rarity-rare'},{value:'pseudo', label:'Pseudo-légendaire', css:'rarity-pseudo'},
   {value:'legendaire', label:'Légendaire', css:'rarity-legendaire'},{value:'fabuleux', label:'Fabuleux', css:'rarity-fabuleux'},
-  {value:'injouable', label:'Injouable', css:'rarity-injouable'}
+  {value:'injouable', label:'Injouable', css:'rarity-injouable'},
+  {value:'mega', label:'Méga', css:'rarity-mega'},{value:'gigamax', label:'Gigamax', css:'rarity-gigamax'}
 ].map(o=> o.value ? {...o, html: rarityOptionHTML(o.css, o.label)} : o);
 // Affiche le menu déroulant de filtre par type principal.
 function renderDexTypeFilter(){
@@ -207,7 +235,9 @@ function dexStatBarHTML(label, val){
 // Fenêtre de détail d'une carte du Dex : sprite (avec aperçu shiny et, s'il existe, Méga/Gigamax),
 // stats de base, talents (avec description), chaîne d'évolution complète de la lignée (cliquable
 // pour naviguer d'un stade/branche à l'autre) et movepool complet (recherche + Physiques/Spéciales/Statut).
-function openDexDetail(line, stageIdx, branchIdx){
+// `initialForm` (optionnel) ouvre directement la fiche sur une forme alternative : clé de Méga-Gemme
+// ou 'gigamax' (cartes Méga/Gigamax de la grille du Dex).
+function openDexDetail(line, stageIdx, branchIdx, initialForm){
   const isBranch = branchIdx!==null && branchIdx!==undefined;
   const member = { lineId: line.id, stage: isBranch ? line.stages.length-1 : stageIdx, branch: isBranch ? branchIdx : null };
   const sp = speciesOf(member);
@@ -260,6 +290,7 @@ function openDexDetail(line, stageIdx, branchIdx){
   // État de l'aperçu (forme + shiny), indépendant de ce qui est réellement affiché ailleurs (Dex/équipe) :
   // ce n'est qu'une consultation, rien n'est enregistré.
   let viewForm = 'base'; // 'base' | 'gigamax' | une clé de sp.forms
+  if(initialForm==='gigamax' ? gigamaxSpriteId : megaKeys.includes(initialForm)) viewForm = initialForm;
   let viewShiny = false;
   function resolveView(){
     if(viewForm==='gigamax') return { name:`${sp.name} Gigamax`, types:sp.types, base:sp.base, abilities:baseAbilities, spriteId:gigamaxSpriteId, spriteName:sp.name };
@@ -343,8 +374,12 @@ function openDexDetail(line, stageIdx, branchIdx){
         </div>
       </div>
       <div class="editor-section">
-        <div class="editor-section-title">Faiblesses & résistances</div>
+        <div class="editor-section-title">Faiblesses & résistances (en défense)</div>
         ${typeMatchupHTML(v.types)}
+      </div>
+      <div class="editor-section">
+        <div class="editor-section-title">Efficacité en attaque (types ${v.types.map(t=>typeDisplayName(t)).join(' / ')})</div>
+        ${typeOffenseHTML(v.types)}
       </div>
       ${affinityDetailHTML()}`;
   }

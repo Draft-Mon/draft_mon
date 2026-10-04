@@ -17,7 +17,7 @@ const MERCHANT_GROUPS = [
   { label: 'Légendaires de Galar', tab: phIcon('sword')+' Galar', keys: ['epeeRouillee','bouclierRouille','parcheminTenebres','parcheminAqua','renePartageGlace','renePartageSpectre'] },
   { label: 'Gigamax', tab: phIcon('circle')+' Gigamax', keys: ['facteurGigamax'] },
   { label: 'Téracristallisation', tab: phIcon('diamond')+' Tera', keys: ['orbeTera'] },
-  { label: 'Méga Gemme (Pokémon Légendes Z-A)', tab: phIcon('sparkle')+' Méga Z-A', keys: ['dragoninite','victreebelite','clefablite','starminite','meganiumite','feraligite','skarmorite','froslassite','emboarite','excadrite','scolipite','scraftinite','eelektrossite','chandelurite','chesnaughtite','delphoxite','greninjite','pyroarite','floettite','barbaracite','dragalgite','hawluchanite','malamarite','zygardite','drampanite','falinksite'] }
+  { label: 'Méga Gemme (Pokémon Légendes Z-A)', tab: phIcon('sparkle')+' Méga Z-A', keys: ['dragoninite','victreebelite','clefablite','starminite','meganiumite','feraligite','skarmorite','froslassite','emboarite','excadrite','scolipite','scraftinite','eelektrossite','chandelurite','chesnaughtite','delphoxite','greninjite','pyroarite','floettite','barbaracite','dragalgite','hawluchanite','malamarite','zygardite','drampanite','falinksite','lucarioniteZ','absoliteZ','garchompiteZ'] }
 ];
 // Affiche la boutique du Marchand Itinérant : un onglet par groupe d'objets spéciaux (comme le
 // Pokéshop), pour que le catalogue entier reste accessible sans scroll interminable.
@@ -53,7 +53,10 @@ function renderMerchantPanel(){
         <div style="font-size:11px;color:var(--text-main);"><b>${item.name}</b> <span style="color:var(--text-dim);">(possédé : ${owned})</span></div>
         <div style="font-size:9px;color:var(--text-dim);line-height:1.4;">${item.desc}</div>
       </div>
-      <button class="btn secondary merchantBuyBtn" data-key="${key}" style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${item.price} ${phIcon('coins')}</button>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;align-items:stretch;">
+        <button class="btn secondary merchantBuyBtn" data-key="${key}" style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${item.price} ${phIcon('coins')}</button>
+        ${sellBtnHTML(key)}
+      </div>
     `;
     list.appendChild(row);
   });
@@ -66,9 +69,12 @@ function renderMerchantPanel(){
       bag[key] = (bag[key]||0)+1;
       refreshVillageMoney();
       saveGame();
-      setVillageMsg(`${phIcon('check')} ${item.name} acheté !`);
       renderMerchantPanel();
+      setVillageMsg(`${phIcon('check')} ${item.name} acheté !`);
     };
+  });
+  list.querySelectorAll('.sellBtn').forEach(btn=>{
+    btn.onclick = ()=> sellItem(btn.dataset.key, renderMerchantPanel);
   });
 }
 document.getElementById('villageMerchantBtn').onclick = ()=>{ merchantCategory = 0; renderMerchantPanel(); };

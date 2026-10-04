@@ -8,6 +8,70 @@
 ==== */
 const PATCH_NOTES = [
   {
+    version: 'v0.12',
+    title: 'v0.12 — Team Builder Update',
+    categories: [
+      {
+        icon: phIcon('wrench'), label: 'Builder d’équipe',
+        items: [
+          "Nouveau bouton « Builder d'équipe » sur l'accueil : un outil à part, totalement indépendant des parties de draft et de la Tour",
+          "Jusqu'à 10 équipes de 6 Pokémon, renommables et sauvegardées dans le navigateur",
+          "Aucune limite hors de la base de données du jeu : toutes les espèces (tous stades, branches et formes), tous les objets tenus, talents, natures, EV/IV, types Téracristal et attaques",
+          "Comparateur : choisis un adversaire et son set pour voir, attaque par attaque et des deux côtés, la fourchette de dégâts et le verdict (OHKO garanti/possible, 2HKO...), plus qui attaque en premier — calculé avec le vrai moteur de combat du jeu",
+          "Menaces : toutes les formes finales du jeu sont testées contre ton build, et celles qui le mettent K.O. en 2 coups au plus tout en gagnant l'échange sont listées (un clic ouvre la menace dans le comparateur)",
+          "Résumé d'équipe : les 6 Pokémon avec objet, talent, nature, répartition d'EV, stats finales et attaques, la couverture défensive par type et les adversaires qui menacent au moins la moitié de l'équipe",
+          "Plus de 2700 sets prédéfinis issus des analyses Smogon (générations 9, 8 et 7) pour 950 espèces, en plus des sets du jeu et du build automatique",
+          "Import / Export au format Pokémon Showdown"
+        ]
+      },
+      {
+        icon: phIcon('diamond'), label: 'Méga-Évolutions Z',
+        items: [
+          "Méga-Lucario Z, Méga-Absol Z et Méga-Carchacrok Z rejoignent le jeu, avec leurs Méga-Gemmes Z vendues par le Marchand Itinérant",
+          "Méga-Lucario et Méga-Carchacrok affichaient le sprite (et le talent) d'un autre Pokémon : corrigé",
+          "Les formes de Silvallié, Zacian, Zamazenta, Sylveroy et Ogerpon ont enfin leur sprite"
+        ]
+      },
+      {
+        icon: phIcon('book-open'), label: 'Pokédex',
+        items: [
+          "Les Méga-Évolutions et les formes Gigamax ont leur propre carte, juste après leur Pokémon de base, avec deux nouvelles raretés filtrables « Méga » et « Gigamax » (elles n'apparaissent jamais au draft)",
+          "Chaque fiche affiche maintenant l'efficacité des types du Pokémon en attaque, en plus de ses faiblesses et résistances en défense",
+          "Plus de 10 000 attaques manquantes ajoutées aux movepools : chaque lignée peut désormais apprendre toutes les capacités du jeu auxquelles elle a droit"
+        ]
+      },
+      {
+        icon: phIcon('paw-print'), label: 'Ranch',
+        items: [
+          "Les Pokémon recrutés au Ranch arrivent maintenant prêts à combattre (talent, nature, EV et 4 attaques) dans toutes les difficultés — ils arrivaient sans attaques en Normal et Difficile",
+          "Nouveau : le Maître des Capacités refait le set d'un Pokémon de l'équipe (talent, nature, EV, attaques classées Physiques / Spéciales / Statut) pour 100 pièces"
+        ]
+      },
+      {
+        icon: phIcon('coins'), label: 'Boutiques',
+        items: [
+          "Bouton « Vendre » au Pokéshop et chez le Marchand Itinérant : les objets se revendent à 60% de leur prix",
+          "Nouvel onglet « Vendre » au Pokéshop, qui liste tout le contenu du sac"
+        ]
+      },
+      {
+        icon: phIcon('sword'), label: 'Combat',
+        items: [
+          "Changer de Pokémon est une action complète pour tout le monde : quand l'adversaire rappelle son Pokémon, le remplaçant n'attaque plus dans le même tour"
+        ]
+      },
+      {
+        icon: phIcon('device-mobile'), label: 'Mobile & interface',
+        items: [
+          "Nouvelle bannière en titre de l'accueil, et nouveau logo",
+          "Le nom des Maîtres de Type ne déborde plus de son bandeau en combat",
+          "Le journal de combat ne recouvre plus les PV de ton Pokémon sur les petits écrans",
+          "Les menus déroulants s'ouvrent vers le haut quand la place manque en bas, et n'appellent plus le clavier à l'ouverture sur écran tactile"
+        ]
+      }
+    ]
+  },
+  {
     version: 'v0.11',
     title: 'v0.11 — Safari Update',
     categories: [
@@ -878,7 +942,9 @@ const SPLASH_TEXTS = [
   "Le Dynamax arrive !",
   "Déclenche ton Gigamax !",
   "Légendes : Arceus débarque !",
-  "Les Formes de Hisui sont là !"
+  "Les Formes de Hisui sont là !",
+  "Construis ton équipe de rêve !",
+  "Les Méga Z débarquent !"
 ];
 // Génère le contenu HTML d'une entrée de patch note (liste de catégories avec icône, ou simple liste à puces).
 function renderPatchNoteBody(v){

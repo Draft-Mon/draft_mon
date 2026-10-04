@@ -113,7 +113,7 @@ const FORM_SPRITE_IDS = {
   'Boréas (Totémique)':10019, 'Fulguris (Totémique)':10020, 'Démétéros (Totémique)':10021,
   'Méga-Florizarre':10033, 'Méga-Dracaufeu X':10034, 'Méga-Dracaufeu Y':10035, 'Méga-Tortank':10036,
   'Méga-Kangourex':10039, 'Méga-Léviator':10041, 'Méga-Mewtwo Y':10044, 'Méga-Cizayox':10046,
-  'Méga-Gardevoir':10051, 'Méga-Carchacrok':10061, 'Méga-Lucario':10062, 'Méga-Métalosse':10076,
+  'Méga-Gardevoir':10051, 'Méga-Carchacrok':10058, 'Méga-Lucario':10059, 'Méga-Métalosse':10076,
   "Rattata d'Alola":10091, "Rattatac d'Alola":10092, "Raichu d'Alola":10100,
   "Sabelette d'Alola":10101, "Sablaireau d'Alola":10102, "Goupix d'Alola":10103, "Feunard d'Alola":10104,
   "Taupiqueur d'Alola":10105, "Triopikeur d'Alola":10106, "Miaouss d'Alola":10107, "Persian d'Alola":10108,
@@ -149,7 +149,13 @@ const FORM_SPRITE_IDS = {
   'Méga-Branette':10056, 'Méga-Absol':10057, 'Méga-Blizzaroi':10060, 'Méga-Ténéfix':10066,
   'Méga-Altaria':10067, 'Méga-Gallame':10068, 'Méga-Nanméouïe':10069, 'Méga-Sharpedo':10070,
   'Méga-Flagadoss':10071, 'Méga-Steelix':10072, 'Méga-Roucarnage':10073, 'Méga-Oniglali':10074,
-  'Méga-Camérupt':10087, 'Méga-Lockpin':10088, 'Méga-Drattak':10089, 'Méga-Dardargnan':10090
+  'Méga-Camérupt':10087, 'Méga-Lockpin':10088, 'Méga-Drattak':10089, 'Méga-Dardargnan':10090,
+  // ---- Méga-Évolutions Z (Légendes Z-A : Méga-Dimension) ----
+  'Méga-Absol Z':10307, 'Méga-Carchacrok Z':10309, 'Méga-Lucario Z':10310,
+  // ---- Formes liées à un objet tenu (légendaires de Galar, Ogerpon) ----
+  'Zacian (Épée Sacrée)':10188, 'Zamazenta (Bouclier Royal)':10189,
+  'Sylveroy (Monture Glace)':10193, 'Sylveroy (Monture Spectre)':10194,
+  'Ogerpon (Masque du Puits)':10273, 'Ogerpon (Masque du Fourneau)':10274, 'Ogerpon (Masque de la Pierre)':10275
 };
 // Choisit la liste de sources à essayer (animées d'abord si demandé, puis repli, puis statique ;
 // version chromatique si shiny, avec repli sur la version normale si jamais une forme n'a pas de
@@ -237,6 +243,8 @@ function getSpriteHTML(name, unownForm, facing, animated, shiny, idOverride){
     id = DEX_NUMBERS['Lougaroc'];
   } else if(name.startsWith('Plumeline (Style')){
     id = DEX_NUMBERS['Plumeline'];
+  } else if(name.startsWith('Silvallié (')){
+    id = DEX_NUMBERS['Silvallié'];
   } else if(name==='Météno'){
     id = unownForm || pickRandomMiniorForm();
   } else {

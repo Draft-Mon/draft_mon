@@ -353,7 +353,8 @@ function openEditor(idx){
       if(!wasOpen){
         dropdown.classList.add('open'); trigger.classList.add('open');
         searchInput.value=''; dropdown.querySelectorAll('.csel-opt-hidden').forEach(o=>o.classList.remove('csel-opt-hidden'));
-        setTimeout(()=>searchInput.focus(), 0);
+        if(!cselIsTouch()) setTimeout(()=>searchInput.focus({preventScroll:true}), 0);
+        positionCselDropdown(trigger, dropdown);
       }
     };
 

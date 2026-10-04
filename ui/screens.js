@@ -141,7 +141,7 @@ document.getElementById('endMenuBtn').onclick = ()=> showScreen('screenMenu');
 
 /* =================== MENU & POKÉDEX =================== */
 function showScreen(id){
-  ['screenMenu','screenDex','screenDraft','screenBuilder','screenTower','screenVillage','screenEvent','screenBattle','screenEnd'].forEach(s=>{
+  ['screenMenu','screenDex','screenTeamBuilder','screenDraft','screenBuilder','screenTower','screenVillage','screenEvent','screenBattle','screenEnd'].forEach(s=>{
     document.getElementById(s).classList.toggle('hidden', s!==id);
   });
   if(id==='screenMenu') refreshMenuUI();

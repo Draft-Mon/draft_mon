@@ -2,8 +2,27 @@
 const SHOP_CATEGORIES = [
   {key:'potion', label:phIcon('pill')+' Potions'},
   {key:'baie', label:phIcon('cherries')+' Baies'},
-  {key:'strat', label:phIcon('medal')+' Stratégiques'}
+  {key:'strat', label:phIcon('medal')+' Stratégiques'},
+  {key:'vendre', label:phIcon('hand-coins')+' Vendre'}
 ];
+// Revente d'un objet du sac (Pokéshop et Marchand Itinérant) : SELL_RATE du prix d'achat de base.
+const SELL_RATE = 0.6;
+function sellPrice(key){ return Math.round(ITEMS[key].price * SELL_RATE); }
+// Vend un exemplaire de l'objet (uniquement ceux du sac, pas ceux tenus par un Pokémon) puis rafraîchit le panneau appelant.
+function sellItem(key, rerender){
+  if(!(bag[key]>0)) return;
+  bag[key]--;
+  money += sellPrice(key);
+  refreshVillageMoney();
+  saveGame();
+  rerender();
+  setVillageMsg(`${phIcon('check')} ${ITEMS[key].name} vendu pour ${sellPrice(key)} ${phIcon('coins')} !`);
+}
+// Bouton "Vendre" d'une ligne d'objet (grisé si le sac n'en contient pas).
+function sellBtnHTML(key){
+  const owned = bag[key]||0;
+  return `<button class="btn secondary sellBtn" data-key="${key}" ${owned>0?'':'disabled'} style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;" title="Vendre un exemplaire">Vendre ${sellPrice(key)} ${phIcon('coins')}</button>`;
+}
 // Affiche le Pokéshop (onglets de catégorie + liste d'objets achetables, prix réduit si un boost de fidélité est acheté).
 function renderPokeshopPanel(){
   const wrap = document.getElementById('villagePanelContent');
@@ -24,7 +43,11 @@ function renderPokeshopPanel(){
   });
   const list = document.getElementById('shopList');
   const discount = metaShopDiscount();
-  Object.entries(ITEMS).filter(([k,it])=>it.category===shopCategory).forEach(([key, item])=>{
+  // Onglet "Vendre" : tout ce que contient le sac (y compris les objets du Marchand), sans bouton d'achat.
+  const selling = shopCategory==='vendre';
+  const shown = Object.entries(ITEMS).filter(([k,it])=> selling ? (bag[k]||0)>0 : it.category===shopCategory);
+  if(selling && !shown.length) list.innerHTML = `<div style="font-size:10px;color:var(--text-dim);text-align:center;padding:10px;">Ton sac est vide.</div>`;
+  shown.forEach(([key, item])=>{
     const owned = bag[key]||0;
     const price = Math.round(item.price * (1 - discount));
     const row = document.createElement('div');
@@ -35,7 +58,10 @@ function renderPokeshopPanel(){
         <div style="font-size:11px;color:var(--text-main);"><b>${item.name}</b> <span style="color:var(--text-dim);">(possédé : ${owned})</span></div>
         <div style="font-size:9px;color:var(--text-dim);line-height:1.4;">${item.desc}</div>
       </div>
-      <button class="btn secondary buyBtn" data-key="${key}" style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${price} ${phIcon('coins')}${discount>0?` <span style="text-decoration:line-through;opacity:.5;font-size:8px;">${item.price}</span>`:''}</button>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;align-items:stretch;">
+        ${selling ? '' : `<button class="btn secondary buyBtn" data-key="${key}" style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${price} ${phIcon('coins')}${discount>0?` <span style="text-decoration:line-through;opacity:.5;font-size:8px;">${item.price}</span>`:''}</button>`}
+        ${sellBtnHTML(key)}
+      </div>
     `;
     list.appendChild(row);
   });
@@ -49,9 +75,12 @@ function renderPokeshopPanel(){
       bag[key] = (bag[key]||0)+1;
       refreshVillageMoney();
       saveGame();
-      setVillageMsg(`${phIcon('check')} ${item.name} acheté !`);
       renderPokeshopPanel();
+      setVillageMsg(`${phIcon('check')} ${item.name} acheté !`);
     };
+  });
+  list.querySelectorAll('.sellBtn').forEach(btn=>{
+    btn.onclick = ()=> sellItem(btn.dataset.key, renderPokeshopPanel);
   });
 }
 

@@ -300,9 +300,11 @@ function finalizeTurn(){
   bs.locked = true;
   const level = foeAiLevel(bs);
   // IA avancée : l'adversaire peut rappeler son Pokémon avant que le tour ne se joue (changement prioritaire).
+  // Changer de Pokémon est une action complète, comme pour le joueur (voir doVoluntarySwitch) : le
+  // remplaçant n'attaque pas ce tour-ci, seules les actions déjà choisies par le joueur sont résolues.
   const switchIdx = foeConsiderSwitch(level);
   if(switchIdx>=0){
-    foeVoluntarySwitch(switchIdx, ()=> runFoeDecisions(level));
+    foeVoluntarySwitch(switchIdx, ()=> resolveTurn([...bs.pendingActions]));
     return;
   }
   runFoeDecisions(level);

@@ -2,14 +2,55 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Draft Mon — Tour de Combat</title>
-<link rel="icon" type="image/png" href="assets/image/logo/Draft_mon_logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Draft Mon — Jeu Pokémon roguelike gratuit par navigateur</title>
+<meta name="description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
+<link rel="canonical" href="https://zolexdbb.github.io/draft_mon/">
+<meta name="theme-color" content="#120F0C">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Draft Mon">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Draft Mon — Jeu Pokémon roguelike gratuit par navigateur">
+<meta property="og:description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
+<meta property="og:url" content="https://zolexdbb.github.io/draft_mon/">
+<meta property="og:image" content="https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Draft Mon — Tour de Combat">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Draft Mon — Jeu Pokémon roguelike gratuit par navigateur">
+<meta name="twitter:description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
+<meta name="twitter:image" content="https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Draft Mon",
+  "alternateName": "Draft Mon — Tour de Combat",
+  "url": "https://zolexdbb.github.io/draft_mon/",
+  "image": "https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg",
+  "description": "Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.",
+  "inLanguage": "fr",
+  "genre": ["Stratégie", "Roguelike"],
+  "gamePlatform": "Navigateur web",
+  "applicationCategory": "Game",
+  "operatingSystem": "Tous",
+  "playMode": "SinglePlayer",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/image/logo/favicon-64.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/image/logo/icon-192.png">
+<link rel="apple-touch-icon" href="assets/image/logo/apple-touch-icon.png">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<body>
+<noscript><p style="max-width:520px;margin:40px auto;padding:0 20px;text-align:center;line-height:1.7;">Draft Mon est un jeu qui tourne entièrement dans ton navigateur : active JavaScript pour drafter ton équipe et gravir la Tour de Combat.</p></noscript>
 <div class="app">
   <div class="site-header">
     <div class="header-actions">
@@ -24,7 +65,7 @@
 
   <div class="panel" id="screenMenu">
     <div class="menu-hero">
-      <img class="menu-banner" src="assets/image/logo/Draft_mon_banner.png" alt="Draft Mon — Tour de Combat" width="1200" height="636">
+      <h1 class="menu-title"><img class="menu-banner" src="assets/image/logo/Draft_mon_banner.webp" alt="Draft Mon — Tour de Combat, jeu Pokémon roguelike gratuit par navigateur" width="1200" height="636" fetchpriority="high"></h1>
       <button class="menu-splash" id="splashTextBtn">Gen 3 is here!!!</button>
     </div>
     <div class="menu-illustration" aria-hidden="true">
@@ -75,7 +116,8 @@
       </svg>
     </div>
     <div class="menu-content">
-      <h1 class="menu-headline">Prêt à gravir la Tour ?</h1>
+      <p class="menu-headline">Prêt à gravir la Tour ?</p>
+      <p class="menu-tagline">Jeu Pokémon roguelike gratuit, jouable directement dans ton navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat.</p>
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:22px 0;">
         <button class="btn" id="menuPlayBtn">▶ Jouer</button>
         <button class="btn secondary" id="scoreBtn"><i class="ph-bold ph-trophy"></i> Score</button>
@@ -84,32 +126,35 @@
         <button class="btn secondary" id="menuDexBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-book-open"></i> Pokédex</button>
         <button class="btn secondary" id="menuTeamBuilderBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-wrench"></i> Builder d'équipe</button>
         <button class="btn secondary" id="menuPatchNotesBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-clipboard-text"></i> Notes de MàJ</button>
-        <div id="menuTokensBadge" class="menu-tokens-pill"><i class="ph-bold ph-ticket"></i> 0 Jetons de Tour</div>
-        <div id="menuCandyBadge" class="menu-tokens-pill"><i class="ph-bold ph-cookie"></i> 0 Bonbons d'Affinité</div>
+        <div id="menuTokensBadge" class="menu-tokens-pill" data-nosnippet><i class="ph-bold ph-ticket"></i> 0 Jetons de Tour</div>
+        <div id="menuCandyBadge" class="menu-tokens-pill" data-nosnippet><i class="ph-bold ph-cookie"></i> 0 Bonbons d'Affinité</div>
       </div>
       <div class="menu-howto-card">
-        <div class="floor-label" style="font-size:11px;letter-spacing:3px;margin-bottom:10px;color:var(--accent-light);">▸ Comment jouer ◂</div>
-        <div style="font-size:13px;color:var(--text-main);opacity:.85;line-height:1.8;text-align:left;">
-          1. Drafte 6 Pokémon : choisis 1 carte parmi 3, six fois.<br>
-          2. Prépare ton équipe : nature, EV, talent, attaques.<br>
-          3. Grimpe la Tour de Combat, étage par étage.<br>
-          4. Tous les 5 étages, affronte un Mini-Boss.<br>
-          5. Tous les 10 étages, bats un Maître de Type pour gagner son Badge.<br>
-          6. Attention aux surprises : combats doubles et événements entre les étages.<br>
-          7. Après chaque Boss et Mini-Boss, fais étape au Campement : Centre Pokémon, Pokéshop et Ranch.<br>
-          8. Parfois, un visiteur rare s'installe au Campement : le Marchand Itinérant ou le Safari.<br>
-          9. Gagne des bonbons d'affinité en battant des dresseurs et en capturant au Safari.<br>
-          10. Confie tes bonbons au Professeur pour voir plus souvent tes Pokémon préférés au draft.<br>
-          11. Chaque défaite rapporte des Jetons de Tour en fonction de ton avancée, à dépenser dans les Boosts de départ.
-        </div>
+        <h2 class="floor-label" style="font-size:11px;font-weight:inherit;letter-spacing:3px;margin:0 0 10px;color:var(--accent-light);">▸ Comment jouer ◂</h2>
+        <ol style="font-size:13px;color:var(--text-main);opacity:.85;line-height:1.8;text-align:left;list-style:none;margin:0;padding:0;">
+          <li>1. Drafte 6 Pokémon : choisis 1 carte parmi 3, six fois.</li>
+          <li>2. Prépare ton équipe : nature, EV, talent, attaques.</li>
+          <li>3. Grimpe la Tour de Combat, étage par étage.</li>
+          <li>4. Tous les 5 étages, affronte un Mini-Boss.</li>
+          <li>5. Tous les 10 étages, bats un Maître de Type pour gagner son Badge.</li>
+          <li>6. Attention aux surprises : combats doubles et événements entre les étages.</li>
+          <li>7. Après chaque Boss et Mini-Boss, fais étape au Campement : Centre Pokémon, Pokéshop et Ranch.</li>
+          <li>8. Parfois, un visiteur rare s'installe au Campement : le Marchand Itinérant ou le Safari.</li>
+          <li>9. Gagne des bonbons d'affinité en battant des dresseurs et en capturant au Safari.</li>
+          <li>10. Confie tes bonbons au Professeur pour voir plus souvent tes Pokémon préférés au draft.</li>
+          <li>11. Chaque défaite rapporte des Jetons de Tour en fonction de ton avancée, à dépenser dans les Boosts de départ.</li>
+        </ol>
       </div>
-      <div style="text-align:center;margin-top:18px;">
-        <a href="confidentialite.html" style="font-size:10px;color:var(--text-dim);">Confidentialité</a>
-      </div>
+      <nav class="menu-links" aria-label="Pages du site">
+        <a href="guide.html">Guide du jeu</a>
+        <a href="faq.html">FAQ</a>
+        <a href="notes-de-mise-a-jour.html">Notes de mise à jour</a>
+        <a href="confidentialite.html">Confidentialité</a>
+      </nav>
     </div>
   </div>
 
-  <div class="panel hidden" id="screenDex">
+  <div class="panel hidden" data-nosnippet id="screenDex">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg-panel);z-index:10;">
       <button class="btn" id="dexBackBtn" style="padding:8px 16px;font-size:11px;flex-shrink:0;width:auto;">← Menu</button>
       <div style="flex:1;min-width:0;">
@@ -128,7 +173,7 @@
     <div class="draft-cards" id="dexGrid"></div>
   </div>
 
-  <div class="panel hidden" id="screenTeamBuilder">
+  <div class="panel hidden" data-nosnippet id="screenTeamBuilder">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg-panel);z-index:10;">
       <button class="btn" id="tbBackBtn" style="padding:8px 16px;font-size:11px;flex-shrink:0;width:auto;">← Menu</button>
       <div style="flex:1;min-width:0;">
@@ -139,7 +184,7 @@
     <div id="tbRoot"></div>
   </div>
 
-  <div class="panel hidden" id="screenDraft">
+  <div class="panel hidden" data-nosnippet id="screenDraft">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <button class="btn secondary" id="draftHomeBtn" style="padding:6px 12px;font-size:12px;"><i class="ph-bold ph-house"></i> Menu</button>
       <div class="draft-progress" id="draftProgress" style="margin:0;"></div>
@@ -151,7 +196,7 @@
     <div class="draft-cards" id="draftCards"></div>
   </div>
 
-  <div class="panel hidden" id="screenBuilder">
+  <div class="panel hidden" data-nosnippet id="screenBuilder">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <button class="btn secondary" id="builderHomeBtn" style="padding:6px 12px;font-size:12px;"><i class="ph-bold ph-house"></i> Menu</button>
       <div class="sub" style="margin:0;">Configure chaque Pokémon — puis valide ton équipe.</div>
@@ -164,7 +209,7 @@
     </div>
   </div>
 
-  <div class="panel hidden" id="screenTower">
+  <div class="panel hidden" data-nosnippet id="screenTower">
     <div class="tower-floor">
       <div class="floor-label">TOUR DE COMBAT</div>
       <div class="floor-num" id="floorNum">1</div>
@@ -182,7 +227,7 @@
     </div>
   </div>
 
-  <div class="panel hidden" id="screenVillage">
+  <div class="panel hidden" data-nosnippet id="screenVillage">
     <div class="village-topbar">
       <div>
         <div class="floor-label" style="letter-spacing:4px;font-size:12px;color:var(--accent);"><i class="ph-bold ph-tent"></i> CAMPEMENT</div>
@@ -328,7 +373,7 @@
   </div>
 
 
-  <div class="panel hidden" id="screenEvent">
+  <div class="panel hidden" data-nosnippet id="screenEvent">
     <div style="text-align:center;margin-bottom:16px;">
       <div class="floor-label" style="letter-spacing:4px;font-size:12px;color:var(--accent);" id="eventTitle"><i class="ph-bold ph-question"></i> ÉVÉNEMENT</div>
     </div>
@@ -343,7 +388,7 @@
     </div>
   </div>
 
-  <div class="panel hidden" id="screenBattle">
+  <div class="panel hidden" data-nosnippet id="screenBattle">
     <div class="battle-arena-fog fog1" aria-hidden="true"></div>
     <div class="battle-arena-fog fog2" aria-hidden="true"></div>
     <div class="battle-arena-fog fog3" aria-hidden="true"></div>
@@ -414,7 +459,7 @@
     </div>
   </div>
 
-  <div class="panel hidden" id="screenEnd">
+  <div class="panel hidden" data-nosnippet id="screenEnd">
     <div class="tower-floor">
       <div class="floor-label" id="endLabel">GAME OVER</div>
       <div class="floor-num" id="endFloor">1</div>
@@ -430,73 +475,73 @@
 </div>
 
 
-<script src="core/rng.js"></script>
-<script src="core/type-chart.js"></script>
-<script src="core/natures.js"></script>
-<script src="core/stats.js"></script>
-<script src="core/state.js"></script>
-<script src="meta/rewards.js"></script>
-<script src="meta/affinity.js"></script>
-<script src="items/items.js"></script>
-<script src="moves/moves.js"></script>
-<script src="pokemon/gen1.js"></script>
-<script src="pokemon/gen2.js"></script>
-<script src="pokemon/gen3.js"></script>
-<script src="pokemon/gen4.js"></script>
-<script src="pokemon/gen5.js"></script>
-<script src="pokemon/gen6.js"></script>
-<script src="pokemon/gen7.js"></script>
-<script src="pokemon/gen8.js"></script>
-<script src="pokemon/gen9.js"></script>
-<script src="pokemon/legends-arceus.js"></script>
-<script src="pokemon/index.js"></script>
-<script src="pokemon/abilities.js"></script>
-<script src="pokemon/forms.js"></script>
-<script src="pokemon/helpers.js"></script>
-<script src="pokemon/weights.js"></script>
-<script src="pokemon/competitive-sets.js"></script>
-<script src="pokemon/smogon-sets.js"></script>
-<script src="pokemon/showdown-names.js"></script>
-<script src="draft/draft-core.js"></script>
-<script src="draft/draft-classic.js"></script>
-<script src="draft/draft-facile.js"></script>
-<script src="combat/tower.js"></script>
-<script src="combat/tower-events.js"></script>
-<script src="combat/pp-system.js"></script>
-<script src="combat/damage-calc.js"></script>
-<script src="combat/status-effects.js"></script>
-<script src="combat/ai-foe.js"></script>
-<script src="combat/zmoves.js"></script>
-<script src="combat/dynamax.js"></script>
-<script src="combat/terastallize.js"></script>
-<script src="combat/megaevolution.js"></script>
-<script src="combat/battle-flow.js"></script>
-<script src="combat/battle-ui.js"></script>
-<script src="combat/move-fx.js"></script>
-<script src="village/village-core.js"></script>
-<script src="village/pokecenter.js"></script>
-<script src="village/pc-storage.js"></script>
-<script src="village/shop.js"></script>
-<script src="village/ranch.js"></script>
-<script src="village/merchant.js"></script>
-<script src="village/safari.js"></script>
-<script src="save/save-system.js"></script>
-<script src="ui/editor.js"></script>
-<script src="ui/dropdowns.js"></script>
-<script src="ui/screens.js"></script>
-<script src="ui/menu-stairs.js"></script>
-<script src="ui/music.js"></script>
-<script src="ui/bag-modal.js"></script>
-<script src="ui/dex-viewer.js"></script>
-<script src="ui/patch-notes.js"></script>
-<script src="ui/team-builder.js"></script>
+<script defer src="core/rng.js"></script>
+<script defer src="core/type-chart.js"></script>
+<script defer src="core/natures.js"></script>
+<script defer src="core/stats.js"></script>
+<script defer src="core/state.js"></script>
+<script defer src="meta/rewards.js"></script>
+<script defer src="meta/affinity.js"></script>
+<script defer src="items/items.js"></script>
+<script defer src="moves/moves.js"></script>
+<script defer src="pokemon/gen1.js"></script>
+<script defer src="pokemon/gen2.js"></script>
+<script defer src="pokemon/gen3.js"></script>
+<script defer src="pokemon/gen4.js"></script>
+<script defer src="pokemon/gen5.js"></script>
+<script defer src="pokemon/gen6.js"></script>
+<script defer src="pokemon/gen7.js"></script>
+<script defer src="pokemon/gen8.js"></script>
+<script defer src="pokemon/gen9.js"></script>
+<script defer src="pokemon/legends-arceus.js"></script>
+<script defer src="pokemon/index.js"></script>
+<script defer src="pokemon/abilities.js"></script>
+<script defer src="pokemon/forms.js"></script>
+<script defer src="pokemon/helpers.js"></script>
+<script defer src="pokemon/weights.js"></script>
+<script defer src="pokemon/competitive-sets.js"></script>
+<script defer src="pokemon/smogon-sets.js"></script>
+<script defer src="pokemon/showdown-names.js"></script>
+<script defer src="draft/draft-core.js"></script>
+<script defer src="draft/draft-classic.js"></script>
+<script defer src="draft/draft-facile.js"></script>
+<script defer src="combat/tower.js"></script>
+<script defer src="combat/tower-events.js"></script>
+<script defer src="combat/pp-system.js"></script>
+<script defer src="combat/damage-calc.js"></script>
+<script defer src="combat/status-effects.js"></script>
+<script defer src="combat/ai-foe.js"></script>
+<script defer src="combat/zmoves.js"></script>
+<script defer src="combat/dynamax.js"></script>
+<script defer src="combat/terastallize.js"></script>
+<script defer src="combat/megaevolution.js"></script>
+<script defer src="combat/battle-flow.js"></script>
+<script defer src="combat/battle-ui.js"></script>
+<script defer src="combat/move-fx.js"></script>
+<script defer src="village/village-core.js"></script>
+<script defer src="village/pokecenter.js"></script>
+<script defer src="village/pc-storage.js"></script>
+<script defer src="village/shop.js"></script>
+<script defer src="village/ranch.js"></script>
+<script defer src="village/merchant.js"></script>
+<script defer src="village/safari.js"></script>
+<script defer src="save/save-system.js"></script>
+<script defer src="ui/editor.js"></script>
+<script defer src="ui/dropdowns.js"></script>
+<script defer src="ui/screens.js"></script>
+<script defer src="ui/menu-stairs.js"></script>
+<script defer src="ui/music.js"></script>
+<script defer src="ui/bag-modal.js"></script>
+<script defer src="ui/dex-viewer.js"></script>
+<script defer src="ui/patch-notes.js"></script>
+<script defer src="ui/team-builder.js"></script>
 <script>
   // Outils de développement : fichier local non versionné (*.local.js dans .gitignore), chargé seulement
   // en local (localhost, réseau privé, file://) pour ne pas provoquer d'erreur 404 en ligne.
   (function(){
     var h = location.hostname;
     var isLocal = location.protocol === 'file:' || /^(localhost|127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h) || /\.local$/.test(h);
-    if(isLocal) document.write('<script src="ui/dev-mode.local.js"><\/script>');
+    if(isLocal) document.write('<script defer src="ui/dev-mode.local.js"><\/script>');
   })();
 </script>
 </body>

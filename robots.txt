@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zolexdbb.github.io/draft_mon/sitemap.xml

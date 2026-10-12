@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+/* Polices (Fredoka, Nunito, JetBrains Mono) : chargées par <link> dans le <head> des pages HTML. */
 :root{
   --bg-deep:#120F0C;
   --bg-panel:#1C1611;
@@ -196,7 +196,7 @@ body{
 /* ---- MENU : mise en page façon maquette (colonne de texte + escalier en fond) ---- */
 #screenMenu{ position:relative; min-height:560px; overflow-x:clip; overflow-y:visible; padding:20px 10px 40px; }
 .menu-content{ position:relative; z-index:2; max-width:560px; text-align:left; }
-/* Bannière-logo de l'accueil (assets/image/logo/Draft_mon_banner.png, fond détouré) : elle sert de
+/* Bannière-logo de l'accueil (assets/image/logo/Draft_mon_banner.webp, fond détouré) : elle sert de
    titre à l'écran d'accueil, centrée tout en haut à la place du titre texte de l'en-tête (masqué sur
    cet écran uniquement), posée sur un halo doré pour se fondre dans le fond. L'étiquette penchée
    (.menu-splash) s'accroche à son coin, comme un autocollant sur le logo. */
@@ -208,6 +208,7 @@ body{
   content:''; position:absolute; inset:-22% -30%; z-index:-1; pointer-events:none;
   background:radial-gradient(closest-side, rgba(255,186,64,.22), rgba(255,186,64,.07) 55%, transparent 78%);
 }
+.menu-title{ margin:0; font-size:inherit; font-weight:inherit; }
 .menu-banner{ display:block; width:100%; height:auto; margin:0; filter:drop-shadow(0 12px 28px rgba(0,0,0,.6)); }
 .menu-hero .menu-splash{ top:-8px; right:-46px; }
 @media (max-width:900px){
@@ -218,6 +219,9 @@ body{
   margin:0; font-family:var(--font-display); font-size:clamp(22px,3.4vw,34px);
   line-height:1.2; color:var(--text-main); font-weight:normal;
 }
+.menu-tagline{ margin:10px 0 0; font-size:14px; line-height:1.6; color:var(--text-dim); }
+.menu-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 16px; margin-top:18px; }
+.menu-links a{ font-size:11px; color:var(--text-dim); }
 .menu-tokens-pill{
   display:inline-flex; align-items:center; gap:6px; padding:10px 16px; border-radius:6px;
   background:rgba(255,255,255,.03); font-family:var(--font-mono); font-size:13px;
@@ -1484,3 +1488,23 @@ button.tb-threat:hover{ border-color:var(--accent); }
   .tb-num-grid{ grid-template-columns:repeat(2,1fr); }
   .tb-toolbar .btn.tb-tool{ flex:1 1 40%; }
 }
+
+/* ---- PAGES DE CONTENU (guide.html, faq.html, notes-de-mise-a-jour.html) : pages de texte statiques,
+   même gabarit que la page Confidentialité, avec un pied de page de liens entre elles. ---- */
+.doc-page{ max-width:720px; margin:0 auto; padding:32px 20px 60px; }
+.doc-page h1{ font-family:var(--font-display); font-size:22px; color:var(--accent-light); margin:0 0 4px; }
+.doc-page .doc-lead{ font-size:14px; line-height:1.7; color:var(--text-main); opacity:.9; margin:10px 0 0; }
+.doc-page h2{ font-size:14px; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin:32px 0 10px; display:flex; align-items:center; gap:8px; }
+.doc-page h3{ font-size:13px; color:var(--accent-light); margin:20px 0 6px; display:flex; align-items:center; gap:8px; }
+.doc-page h4{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px; margin:14px 0 4px; display:flex; align-items:center; gap:6px; }
+.doc-page p, .doc-page li{ font-size:13px; line-height:1.7; color:var(--text-main); opacity:.9; }
+.doc-page ul, .doc-page ol{ margin:8px 0; padding-left:20px; }
+.doc-page li{ margin-bottom:6px; }
+.doc-page a:not(.btn){ color:var(--accent-light); }
+.doc-page table{ width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+.doc-page th, .doc-page td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text-main); vertical-align:top; }
+.doc-page th{ color:var(--text-dim); text-transform:uppercase; font-size:10px; letter-spacing:.5px; }
+.doc-back{ display:inline-flex; align-items:center; gap:6px; margin-bottom:20px; }
+.doc-footer{ display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:40px; padding-top:16px; border-top:1px solid var(--line); }
+.doc-footer a{ font-size:12px; color:var(--text-dim); }
+.doc-footer a[aria-current="page"]{ color:var(--accent-light); }

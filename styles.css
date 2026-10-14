@@ -220,6 +220,10 @@ body{
   line-height:1.2; color:var(--text-main); font-weight:normal;
 }
 .menu-tagline{ margin:10px 0 0; font-size:14px; line-height:1.6; color:var(--text-dim); }
+.menu-about{ max-width:420px; margin-top:18px; padding:16px 24px 10px; border-radius:8px; background:rgba(255,255,255,.03); border:1px solid var(--line); text-align:left; }
+.menu-about h2{ margin:0 0 6px; font-size:13px; color:var(--accent-light); }
+.menu-about p{ margin:0 0 8px; font-size:12px; line-height:1.7; color:var(--text-dim); }
+@media (max-width:900px){ .menu-about{ margin-left:auto; margin-right:auto; } }
 .menu-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 16px; margin-top:18px; }
 .menu-links a{ font-size:11px; color:var(--text-dim); }
 .menu-tokens-pill{

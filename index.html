@@ -5,30 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Draft Mon — Jeu Pokémon roguelike gratuit par navigateur</title>
 <meta name="description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
-<link rel="canonical" href="https://zolexdbb.github.io/draft_mon/">
+<link rel="canonical" href="https://draft-mon.github.io/">
 <meta name="theme-color" content="#120F0C">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Draft Mon">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Draft Mon — Jeu Pokémon roguelike gratuit par navigateur">
 <meta property="og:description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
-<meta property="og:url" content="https://zolexdbb.github.io/draft_mon/">
-<meta property="og:image" content="https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta property="og:url" content="https://draft-mon.github.io/">
+<meta property="og:image" content="https://draft-mon.github.io/assets/image/logo/Draft_mon_og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Draft Mon — Tour de Combat">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Draft Mon — Jeu Pokémon roguelike gratuit par navigateur">
 <meta name="twitter:description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
-<meta name="twitter:image" content="https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta name="twitter:image" content="https://draft-mon.github.io/assets/image/logo/Draft_mon_og.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "VideoGame",
   "name": "Draft Mon",
   "alternateName": "Draft Mon — Tour de Combat",
-  "url": "https://zolexdbb.github.io/draft_mon/",
-  "image": "https://zolexdbb.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg",
+  "url": "https://draft-mon.github.io/",
+  "image": "https://draft-mon.github.io/assets/image/logo/Draft_mon_og.jpg",
   "description": "Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.",
   "inLanguage": "fr",
   "genre": ["Stratégie", "Roguelike"],
@@ -48,6 +48,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
+<script>
+  // Migration depuis l'ancienne adresse (zolexdbb.github.io/draft_mon/) : la page de redirection laissée
+  // là-bas transmet les sauvegardes du joueur dans le fragment #migration=... (jamais envoyé au serveur).
+  // On ne les importe que si ce navigateur n'a encore aucune donnée Draft Mon ici, pour ne rien écraser,
+  // puis on retire le fragment de l'adresse. S'exécute avant les scripts du jeu (chargés en defer).
+  (function(){
+    var m = location.hash.match(/^#migration=(.+)$/);
+    if(!m) return;
+    try {
+      var hasData = false;
+      for(var i=0;i<localStorage.length;i++){ if(localStorage.key(i).indexOf('draftArena')===0){ hasData = true; break; } }
+      if(!hasData){
+        var data = JSON.parse(decodeURIComponent(m[1]));
+        Object.keys(data).forEach(function(k){
+          if(k.indexOf('draftArena')===0 && typeof data[k]==='string') localStorage.setItem(k, data[k]);
+        });
+      }
+    } catch(e){}
+    history.replaceState(null, '', location.pathname + location.search);
+  })();
+</script>
 </head>
 <body>
 <noscript><p style="max-width:520px;margin:40px auto;padding:0 20px;text-align:center;line-height:1.7;">Draft Mon est un jeu qui tourne entièrement dans ton navigateur : active JavaScript pour drafter ton équipe et gravir la Tour de Combat.</p></noscript>
@@ -145,6 +166,11 @@
           <li>11. Chaque défaite rapporte des Jetons de Tour en fonction de ton avancée, à dépenser dans les Boosts de départ.</li>
         </ol>
       </div>
+      <section class="menu-about">
+        <h2>Un roguelike Pokémon gratuit, sans téléchargement</h2>
+        <p>Draft Mon est un fan-game Pokémon en français qui se joue en ligne, directement dans le navigateur, sur ordinateur comme sur téléphone. Chaque partie est différente : le draft te donne une équipe imprévue, et la Tour de Combat devient plus dure à chaque étage.</p>
+        <p>Plus de 1000 Pokémon de Kanto à Paldea, la Méga-Évolution, les Capacités Z, le Dynamax et la Téracristallisation, trois difficultés et un Builder d'équipe compatible Pokémon Showdown. Pas de compte, pas de publicité.</p>
+      </section>
       <nav class="menu-links" aria-label="Pages du site">
         <a href="guide.html">Guide du jeu</a>
         <a href="faq.html">FAQ</a>

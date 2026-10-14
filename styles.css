@@ -224,6 +224,9 @@ body{
 .menu-about h2{ margin:0 0 6px; font-size:13px; color:var(--accent-light); }
 .menu-about p{ margin:0 0 8px; font-size:12px; line-height:1.7; color:var(--text-dim); }
 @media (max-width:900px){ .menu-about{ margin-left:auto; margin-right:auto; } }
+.menu-note{ max-width:420px; margin:14px 0 0; font-size:11px; line-height:1.6; color:var(--text-dim); text-align:left; }
+.menu-note a{ color:var(--accent-light); }
+@media (max-width:900px){ .menu-note{ margin-left:auto; margin-right:auto; } }
 .menu-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 16px; margin-top:18px; }
 .menu-links a{ font-size:11px; color:var(--text-dim); }
 .menu-tokens-pill{

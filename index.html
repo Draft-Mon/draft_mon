@@ -50,6 +50,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 <script>
+  // Titre court dans l'onglet dès l'ouverture (ui/tab-title.js le met ensuite à jour selon l'écran).
+  document.title = 'Draft Mon';
+</script>
+<script>
   // Migration depuis l'ancienne adresse (zolexdbb.github.io/draft_mon/) : la page de redirection laissée
   // là-bas transmet les sauvegardes du joueur dans le fragment #migration=... (jamais envoyé au serveur).
   // On ne les importe que si ce navigateur n'a encore aucune donnée Draft Mon ici, pour ne rien écraser,
@@ -172,6 +176,7 @@
         <p>Draft Mon est un fan-game Pokémon en français qui se joue en ligne, directement dans le navigateur, sur ordinateur comme sur téléphone. Chaque partie est différente : le draft te donne une équipe imprévue, et la Tour de Combat devient plus dure à chaque étage.</p>
         <p>Plus de 1000 Pokémon de Kanto à Paldea, la Méga-Évolution, les Capacités Z, le Dynamax et la Téracristallisation, trois difficultés et un Builder d'équipe compatible Pokémon Showdown. Pas de compte, pas de publicité.</p>
       </section>
+      <p class="menu-note"><i class="ph-bold ph-paint-brush"></i> Draft Mon est encore en bêta : le logo et la bannière sont des images provisoires générées par IA. Tu es artiste et tu aimerais proposer tes services ? Passe sur le <a href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
       <nav class="menu-links" aria-label="Pages du site">
         <a href="guide.html">Guide du jeu</a>
         <a href="faq.html">FAQ</a>
@@ -562,6 +567,7 @@
 <script defer src="ui/dex-viewer.js"></script>
 <script defer src="ui/patch-notes.js"></script>
 <script defer src="ui/team-builder.js"></script>
+<script defer src="ui/tab-title.js"></script>
 <script>
   // Outils de développement : fichier local non versionné (*.local.js dans .gitignore), chargé seulement
   // en local (localhost, réseau privé, file://) pour ne pas provoquer d'erreur 404 en ligne.

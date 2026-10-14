@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://draft-mon.github.io/sitemap.xml
+Sitemap: https://draft-mon.github.io/draft_mon/sitemap.xml

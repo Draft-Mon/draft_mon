@@ -1,5 +1,6 @@
 /* ==== SOMMAIRE ====
-   Dynamax/Gigamax : une fois par combat, côté joueur uniquement, pendant 3 tours chaque capacité
+   Dynamax/Gigamax : une fois par combat, avec le Bracelet Dynamax (objet clé du Pokéshop), pour le
+   joueur (et pour certains Boss, voir combat/boss-mechanics.js), pendant 3 tours chaque capacité
    offensive choisie devient une Capacité Max surboostée (PV du porteur aussi boostés de 50%).
    - MAX_MOVE_BY_TYPE : nom/texte de la Capacité Max générique par type
    - maxMovePower : table officielle de conversion puissance de base → puissance Capacité Max
@@ -56,9 +57,10 @@ const GIGAMAX_LINES = {
   snorlax:     { name:'G-Max Câlin Collant',   desc:"Étreint la cible avec une force colossale.", secondaryBoost:{stat:'spe',stages:-1,chance:1} },
   gastly:      { name:'G-Max Épouvante',       desc:"Plonge la cible dans une terreur profonde.", secondaryBoost:{stat:'atk',stages:-1,chance:1} }
 };
-// Vrai si ce Pokémon peut Dynamaxer ce combat (pas déjà utilisé, au moins une capacité offensive avec PP).
+// Vrai si ce Pokémon peut Dynamaxer ce combat (Bracelet Dynamax dans le sac, pas déjà utilisé, au moins
+// une capacité offensive avec PP).
 function canDynamax(p, bs){
-  if(!p || !bs || bs.dynamaxUsed) return false;
+  if(!p || !bs || bs.dynamaxUsed || !hasKeyItem('braceletDynamax')) return false;
   return (p.moves||[]).some((m,i)=> m && (m.cat==='phys'||m.cat==='spec') && p.ppCur[i]>0);
 }
 // Transforme une capacité de base en Capacité Max : puissance selon la table officielle, perd ses

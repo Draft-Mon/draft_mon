@@ -4,8 +4,11 @@
    jeu (espèces, formes, objets, talents, capacités), les comparer à d'autres Pokémon et repérer les
    menaces. Rien ici ne touche à la partie en cours ni aux sauvegardes de la Tour. Repères :
    - Stockage : tbLoad/tbSave (localStorage, clé TB_KEY), 10 équipes renommables
-   - Espèces/sets : tbSpeciesList, tbPresets (sets Smogon de pokemon/smogon-sets.js, sets curés du
-     jeu de pokemon/competitive-sets.js, puis build automatique), tbApplySet
+   - Espèces/sets : tbSpeciesList, tbPresets (sets de tournoi de pokemon/tournament-sets.js — les mêmes
+     que les adversaires de la Tour —, set VGC, analyses Smogon de pokemon/smogon-sets.js, puis build
+     automatique), tbApplySet
+   - Adversaire du comparateur : tbData.foe (espèce, set appliqué, membre complet personnalisable),
+     tbSetFoe, tbGetFoe ; le même éditeur sert aux deux (tbRenderEditor avec foe:true)
    - Calculs : tbCombatant (membre → combattant figé), tbDamageRange (dégâts min/max via le vrai
      computeDamage du jeu, hors combat), tbMatchup, tbThreatsFor
    - Affichage : tbRender (barre d'équipes, 6 emplacements, éditeur du membre, Comparateur/Menaces),
@@ -19,8 +22,7 @@ const TB_STATS = ['hp','atk','def','spa','spd','spe'];
 let tbData = null;
 let tbSel = 0;                 // emplacement de l'équipe en cours d'édition
 let tbTab = 'compare';         // 'compare' | 'threats'
-let tbFoeKey = null;           // espèce adverse du comparateur (clé d'entrée)
-let tbFoePreset = 0;
+let tbFoeEdit = false;         // éditeur de l'adversaire du comparateur ouvert
 let tbSpeciesCache = null;
 let tbThreatPool = null;
 
@@ -39,6 +41,9 @@ function tbLoad(){
     t.members.forEach(m=>{ m.nature = NATURES.find(n=>n.name===(m.nature && m.nature.name)) || NATURES[0]; });
   });
   data.cur = Math.max(0, Math.min(TB_TEAM_COUNT-1, data.cur||0));
+  const foe = data.foe;
+  if(foe && foe.member && lineOf(foe.member.lineId)) foe.member.nature = NATURES.find(n=>n.name===(foe.member.nature && foe.member.nature.name)) || NATURES[0];
+  else data.foe = null;
   tbData = data;
 }
 function tbSave(){
@@ -107,13 +112,31 @@ function tbBlankMember(entry){
   m.teraType = entry.sp.types[0];
   return m;
 }
-// Sets prédéfinis disponibles pour une espèce : Smogon, puis le set curé du jeu, puis le build auto.
+// Nom lisible d'un set : son nom d'analyse Smogon, sinon son objet et sa nature (HTML, un morceau par
+// élément pour que chacun soit traduit).
+function tbSetNameHTML(s){
+  if(s.n) return `<span>${tbEsc(s.n)}</span>`;
+  const it = s.i && ITEMS[s.i];
+  return `${it ? `${itemIconHTML(s.i,14)} <span>${it.name}</span>` : '<span>Sans objet</span>'} · <span>${natureFor(s.p, s.m).name}</span>`;
+}
+// Sets prédéfinis disponibles pour une espèce : ceux joués en tournoi (jusqu'à 5, ceux que tirent les
+// adversaires de la Tour, plus les sets de Méga-Évolution), le set VGC (combat double) le plus joué, les
+// analyses Smogon, le set curé du jeu (seulement s'il n'y a aucun set de tournoi), puis le build auto.
 function tbPresets(entry){
   const list = [];
-  ((typeof SMOGON_SETS!=='undefined' && SMOGON_SETS[entry.sp.name]) || []).forEach(s=>{
-    list.push({ label:`${s.n} — ${s.f}`, source:'Smogon', build:()=>{ const m = tbBlankMember(entry); tbApplySet(m, s); return m; } });
+  const name = entry.sp.name;
+  const fromSet = (s, source, html)=> list.push({
+    label: (s.n || (s.i && ITEMS[s.i] ? ITEMS[s.i].name : 'Sans objet')) + ' — ' + s.f, source,
+    html: html || `${tbSetNameHTML(s)} — <span>${s.f}</span>${s.u ? ` <span style="color:var(--text-dim);">(${s.u} %)</span>` : ''}`,
+    build:()=>{ const m = tbBlankMember(entry); tbApplySet(m, s); return m; }
   });
-  const cur = (typeof COMPETITIVE_SETS!=='undefined') ? COMPETITIVE_SETS[entry.sp.name] : null;
+  const tour = (typeof TOURNAMENT_SETS!=='undefined' && TOURNAMENT_SETS[name]) || [];
+  tour.forEach(s=> fromSet(s, 'Tournoi'));
+  ((typeof VGC_SETS!=='undefined' && VGC_SETS[name]) || []).forEach(s=> fromSet(s, 'VGC'));
+  ((typeof SMOGON_SETS!=='undefined' && SMOGON_SETS[name]) || []).forEach(s=>{
+    fromSet(s, 'Smogon', `<span>${tbEsc(s.n)}</span> — <span>${s.f}</span>`);
+  });
+  const cur = (!tour.length && typeof COMPETITIVE_SETS!=='undefined') ? COMPETITIVE_SETS[name] : null;
   if(cur){
     list.push({ label:'Set du jeu (Tour)', source:'Jeu', build:()=>{
       const m = tbBlankMember(entry);
@@ -128,6 +151,24 @@ function tbPresets(entry){
     return m;
   }});
   return list;
+}
+function tbPresetOptions(presets){
+  return presets.map((p,i)=>({value:i, label:p.label, html:`<span class="tb-src tb-src-${p.source.toLowerCase()}">${p.source}</span> ${p.html || `<span>${tbEsc(p.label)}</span>`}`}));
+}
+// Adversaire du comparateur : une espèce, le set prédéfini appliqué et le membre complet qui en résulte
+// (modifiable ensuite comme un membre de l'équipe ; custom = modifié depuis le set).
+function tbSetFoe(entry, preset){
+  const presets = tbPresets(entry);
+  const i = (preset>=0 && preset<presets.length) ? preset : 0;
+  tbData.foe = { key:entry.key, preset:i, custom:false, member:presets[i].build() };
+  tbSave();
+}
+function tbGetFoe(){
+  if(!tbData.foe || !tbData.foe.member || !tbEntryByKey(tbData.foe.key)){
+    const def = tbSpeciesList().find(e=>e.sp.name==='Carchacrok') || tbSpeciesList().find(e=>e.final);
+    tbSetFoe(def, 0);
+  }
+  return tbData.foe;
 }
 
 /* ---------- Calculs ---------- */
@@ -367,8 +408,16 @@ function tbEsc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt
 // Tout changement du build : sauvegarde + réaffichage complet (stats, comparateur et menaces à jour).
 function tbChanged(){ tbSave(); tbRender(); }
 
-function tbRenderEditor(m){
-  const el = document.getElementById('tbEditor');
+// Éditeur complet d'un Pokémon. Sert au membre sélectionné de l'équipe (dans #tbEditor) et, avec
+// foe:true, à l'adversaire du comparateur (dans le panneau d'analyse, own = membre comparé).
+function tbRenderEditor(m, opts){
+  opts = opts || {};
+  const foe = !!opts.foe;
+  const el = opts.el || document.getElementById('tbEditor');
+  const $ = k=> el.querySelector(`[data-tb="${k}"]`);
+  // Après chaque modification : l'équipe se sauvegarde et tout se réaffiche ; l'adversaire devient un
+  // set personnalisé et seul le comparateur se réaffiche.
+  const changed = foe ? ()=>{ tbData.foe.custom = true; tbSave(); tbRenderAnalysis(opts.own); } : tbChanged;
   const entry = tbEntryOf(m);
   const form = tbForm(m);
   const isMega = form!==speciesOf(m);
@@ -378,7 +427,7 @@ function tbRenderEditor(m){
   const evTotal = TB_STATS.reduce((a,k)=>a+(m.evs[k]||0),0);
   const lab = t=>`<label class="tb-label">${t}</label>`;
   el.innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+    ${foe ? '' : `<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
       ${tbSpriteBox(form.name, 64, m.shiny)}
       <div style="min-width:0;flex:1;">
         <div style="font-size:14px;color:var(--text-main);font-weight:700;">${form.name}${m.shiny?shinyBadgeHTML():''}</div>
@@ -386,88 +435,90 @@ function tbRenderEditor(m){
       </div>
     </div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
-      <button class="btn secondary tb-tool" id="tbChangeBtn">${phIcon('arrows-clockwise')} Changer</button>
-      <button class="btn secondary tb-tool${m.shiny?' diff-active':''}" id="tbShinyBtn">${phIcon('sparkle')} Chromatique</button>
-      <button class="btn secondary tb-tool" id="tbRemoveBtn">${phIcon('x')} Retirer</button>
+      <button class="btn secondary tb-tool" data-tb="change">${phIcon('arrows-clockwise')} Changer</button>
+      <button class="btn secondary tb-tool${m.shiny?' diff-active':''}" data-tb="shiny">${phIcon('sparkle')} Chromatique</button>
+      <button class="btn secondary tb-tool" data-tb="remove">${phIcon('x')} Retirer</button>
     </div>
-    ${lab('Set prédéfini (Smogon / jeu / auto)')}<div id="tbPresetSel"></div>
-    ${lab('Objet tenu')}<div id="tbItemSel"></div>
-    ${lab('Talent')}<div id="tbAbilitySel"></div>
+    ${lab('Set prédéfini (tournoi / Smogon / auto)')}<div data-tb="preset"></div>`}
+    ${lab('Objet tenu')}<div data-tb="item"></div>
+    ${lab('Talent')}<div data-tb="ability"></div>
     <div class="effect-desc" style="margin-top:4px;">${ABILITY_DESC[m.ability]||''}</div>
     ${isMega ? `<div class="effect-desc" style="margin-top:4px;"><b>Une fois Méga-Évolué : ${megaAbility}</b> — ${ABILITY_DESC[megaAbility]||''}</div>` : ''}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div>${lab('Nature')}<div id="tbNatureSel"></div></div>
-      <div>${lab('Type Téracristal')}<div id="tbTeraSel"></div></div>
+      <div>${lab('Nature')}<div data-tb="nature"></div></div>
+      <div>${lab('Type Téracristal')}<div data-tb="tera"></div></div>
     </div>
     ${lab(`EV (0–${EV_MAX} par stat · ${EV_TOTAL_MAX} au total)`)}
-    <div class="ev-grid tb-num-grid" id="tbEvGrid"></div>
+    <div class="ev-grid tb-num-grid" data-tb="evs"></div>
     <div class="ev-total${evTotal>EV_TOTAL_MAX?' over':''}">${evTotal} / ${EV_TOTAL_MAX}</div>
     ${lab('IV (0–31)')}
-    <div class="iv-grid tb-num-grid" id="tbIvGrid"></div>
-    ${lab('Attaques')}<div id="tbMoves" style="display:flex;flex-direction:column;gap:6px;"></div>
+    <div class="iv-grid tb-num-grid" data-tb="ivs"></div>
+    ${lab('Attaques')}<div data-tb="moves" style="display:flex;flex-direction:column;gap:6px;"></div>
     ${lab('Stats finales (niveau 50) · base')}
     <div class="stat-bars">${tbStatBarsHTML(m)}</div>`;
-  document.getElementById('tbChangeBtn').onclick = ()=> tbOpenSpeciesPicker(en=>{
-    tbTeam().members[tbSel] = tbPresets(en)[0].build();
-    tbChanged();
-  });
-  document.getElementById('tbShinyBtn').onclick = ()=>{ m.shiny = !m.shiny; tbChanged(); };
-  document.getElementById('tbRemoveBtn').onclick = ()=>{
-    tbTeam().members.splice(tbSel,1);
-    tbSel = Math.max(0, Math.min(tbSel, tbTeam().members.length-1));
-    tbChanged();
-  };
-  document.getElementById('tbPresetSel').appendChild(createCustomSelect({
-    options: presets.map((p,i)=>({value:i, label:p.label, html:`<span class="tb-src tb-src-${p.source.toLowerCase()}">${p.source}</span> ${tbEsc(p.label)}`})),
-    value: null, placeholder:'— Appliquer un set —', searchable:false,
-    onChange: (val)=>{
-      const built = presets[val].build();
-      built.shiny = m.shiny;
-      tbTeam().members[tbSel] = built;
+  if(!foe){
+    $('change').onclick = ()=> tbOpenSpeciesPicker(en=>{
+      tbTeam().members[tbSel] = tbPresets(en)[0].build();
       tbChanged();
-    }
-  }));
-  document.getElementById('tbItemSel').appendChild(createCustomSelect({
+    });
+    $('shiny').onclick = ()=>{ m.shiny = !m.shiny; tbChanged(); };
+    $('remove').onclick = ()=>{
+      tbTeam().members.splice(tbSel,1);
+      tbSel = Math.max(0, Math.min(tbSel, tbTeam().members.length-1));
+      tbChanged();
+    };
+    $('preset').appendChild(createCustomSelect({
+      options: tbPresetOptions(presets),
+      value: null, placeholder:'— Appliquer un set —', searchable:false,
+      onChange: (val)=>{
+        const built = presets[val].build();
+        built.shiny = m.shiny;
+        tbTeam().members[tbSel] = built;
+        tbChanged();
+      }
+    }));
+  }
+  $('item').appendChild(createCustomSelect({
     options: tbItemOptions(), value: m.heldItem || '', searchable:true,
-    onChange: (val)=>{ m.heldItem = val || null; tbFixAbility(m); m.moves = m.moves.map(id=> (id && movepoolFor(m).includes(id)) ? id : null); tbChanged(); }
+    onChange: (val)=>{ m.heldItem = val || null; tbFixAbility(m); m.moves = m.moves.map(id=> (id && movepoolFor(m).includes(id)) ? id : null); changed(); }
   }));
-  document.getElementById('tbAbilitySel').appendChild(createCustomSelect({
+  $('ability').appendChild(createCustomSelect({
     options: abilities.map(a=>({value:a, label:a})),
     value: m.ability,
-    onChange: (val)=>{ m.ability = val; tbChanged(); }
+    onChange: (val)=>{ m.ability = val; changed(); }
   }));
-  document.getElementById('tbNatureSel').appendChild(createCustomSelect({
+  $('nature').appendChild(createCustomSelect({
     options: NATURES.map(n=>({
       value:n.name, label:n.name+(n.plus?` (+${STAT_LABEL[n.plus]}/-${STAT_LABEL[n.minus]})`:''),
       html: n.plus ? `${n.name} <span style="color:var(--good);font-weight:700;">+${STAT_LABEL[n.plus]}</span> <span style="color:var(--low);font-weight:700;">-${STAT_LABEL[n.minus]}</span>` : `${n.name} <span style="color:var(--text-dim);">(neutre)</span>`
     })),
     value: m.nature.name,
-    onChange: (val)=>{ m.nature = NATURES.find(n=>n.name===val); tbChanged(); }
+    onChange: (val)=>{ m.nature = NATURES.find(n=>n.name===val); changed(); }
   }));
-  document.getElementById('tbTeraSel').appendChild(createCustomSelect({
+  $('tera').appendChild(createCustomSelect({
     options: TERA_TYPES.map(t=>({value:t, label:typeDisplayName(t), html:`${typeIconHTML(t)} ${typeDisplayName(t)}`})),
     value: m.teraType || form.types[0], searchable:false,
-    onChange: (val)=>{ m.teraType = val; tbChanged(); }
+    onChange: (val)=>{ m.teraType = val; changed(); }
   }));
-  const numGrid = (id, obj, max)=>{
-    const grid = document.getElementById(id);
+  const numGrid = (key, obj, max)=>{
+    const grid = $(key);
     TB_STATS.forEach(k=>{
-      const row = document.createElement('div'); row.className = id==='tbEvGrid' ? 'ev-row' : 'iv-row';
+      const row = document.createElement('div'); row.className = key==='evs' ? 'ev-row' : 'iv-row';
       row.innerHTML = `<label>${STAT_LABEL[k]}</label><input type="number" min="0" max="${max}" step="1" value="${obj[k]||0}">`;
       const inp = row.querySelector('input');
-      inp.onchange = ()=>{ obj[k] = Math.max(0, Math.min(max, parseInt(inp.value)||0)); tbChanged(); };
+      inp.onchange = ()=>{ obj[k] = Math.max(0, Math.min(max, parseInt(inp.value)||0)); changed(); };
       grid.appendChild(row);
     });
   };
-  numGrid('tbEvGrid', m.evs, EV_MAX);
-  numGrid('tbIvGrid', m.ivs, 31);
+  numGrid('evs', m.evs, EV_MAX);
+  numGrid('ivs', m.ivs, 31);
   const pool = [...new Set(movepoolFor(m))].filter(id=>MOVES[id]);
-  const movesEl = document.getElementById('tbMoves');
+  const movesEl = $('moves');
   for(let slot=0;slot<4;slot++){
     const taken = m.moves.filter((id,i)=> i!==slot && id);
     movesEl.appendChild(createCustomSelect({
       options: tbMoveOptions(pool, taken), value: m.moves[slot] || '', searchable:true,
-      onChange: (val)=>{ m.moves[slot] = val || null; tbChanged(); }
+      onChange: (val)=>{ m.moves[slot] = val || null; changed(); }
     }));
   }
 }
@@ -487,14 +538,10 @@ function tbRenderAnalysis(m){
 function tbRenderCompare(m){
   const body = document.getElementById('tbAnalysisBody');
   const me = tbCombatant(m);
-  if(!tbFoeKey || !tbEntryByKey(tbFoeKey)){
-    const def = tbSpeciesList().find(e=>e.sp.name==='Carchacrok') || tbSpeciesList().find(e=>e.final);
-    tbFoeKey = def.key; tbFoePreset = 0;
-  }
-  const foeEntry = tbEntryByKey(tbFoeKey);
+  const foeData = tbGetFoe();
+  const foeEntry = tbEntryByKey(foeData.key);
   const presets = tbPresets(foeEntry);
-  if(tbFoePreset>=presets.length) tbFoePreset = 0;
-  const foeMember = presets[tbFoePreset].build();
+  const foeMember = foeData.member;
   const foe = tbCombatant(foeMember);
   const mu = tbMatchup(me, foe);
   const sp = tbSpreadText(foeMember);
@@ -510,9 +557,13 @@ function tbRenderCompare(m){
         <div style="font-size:13px;color:var(--text-main);font-weight:700;">${foe.name}</div>
         <div class="types-row" style="justify-content:flex-start;margin-top:3px;">${foe.types.map(t=>typeTagHTML(t)).join('')}</div>
       </div>
-      <button class="btn secondary tb-tool" id="tbFoeChangeBtn">${phIcon('magnifying-glass')} Choisir</button>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <button class="btn secondary tb-tool" id="tbFoeChangeBtn">${phIcon('magnifying-glass')} Choisir</button>
+        <button class="btn secondary tb-tool${tbFoeEdit?' diff-active':''}" id="tbFoeEditBtn">${phIcon('pencil-simple')} Personnaliser</button>
+      </div>
     </div>
     <label class="tb-label">Set de l'adversaire</label><div id="tbFoePresetSel"></div>
+    ${tbFoeEdit ? `<div class="tb-foe-editor" id="tbFoeEditor"></div>` : ''}
     <div class="tb-foe-build">
       ${foeMember.heldItem ? `${itemIconHTML(foeMember.heldItem,14)} ${ITEMS[foeMember.heldItem].name} · ` : ''}${foe.ability} · ${sp.nat}<br>${sp.evs}
       <br>PV ${foe.stats.hp} · Atq ${foe.stats.atk} · Déf ${foe.stats.def} · AtqSp ${foe.stats.spa} · DéfSp ${foe.stats.spd} · Vit ${foe.stats.spe}
@@ -527,12 +578,15 @@ function tbRenderCompare(m){
     <div class="editor-section-title" style="margin-top:12px;">${foe.name} attaque ${me.name}</div>
     ${mu.theirs.map(tbMoveLineHTML).join('')}
     <div class="tb-note">Dégâts en % des PV max, sans coup critique, météo ni changement de stats, calculés avec les règles du jeu (niveau 50). Une Méga-Gemme tenue est considérée comme activée.</div>`;
-  document.getElementById('tbFoeChangeBtn').onclick = ()=> tbOpenSpeciesPicker(en=>{ tbFoeKey = en.key; tbFoePreset = 0; tbRenderAnalysis(m); });
+  document.getElementById('tbFoeChangeBtn').onclick = ()=> tbOpenSpeciesPicker(en=>{ tbSetFoe(en, 0); tbRenderAnalysis(m); });
+  document.getElementById('tbFoeEditBtn').onclick = ()=>{ tbFoeEdit = !tbFoeEdit; tbRenderAnalysis(m); };
+  // Un set modifié n'est plus le set prédéfini : le menu affiche alors « Set personnalisé ».
   document.getElementById('tbFoePresetSel').appendChild(createCustomSelect({
-    options: presets.map((p,i)=>({value:i, label:p.label, html:`<span class="tb-src tb-src-${p.source.toLowerCase()}">${p.source}</span> ${tbEsc(p.label)}`})),
-    value: tbFoePreset, searchable:false,
-    onChange: (val)=>{ tbFoePreset = val; tbRenderAnalysis(m); }
+    options: tbPresetOptions(presets),
+    value: foeData.custom ? null : foeData.preset, placeholder:'Set personnalisé', searchable:false,
+    onChange: (val)=>{ tbSetFoe(foeEntry, val); tbRenderAnalysis(m); }
   }));
+  if(tbFoeEdit) tbRenderEditor(foeMember, { foe:true, own:m, el:document.getElementById('tbFoeEditor') });
 }
 function tbThreatRowHTML(info, extra){
   const t = info.t;
@@ -557,9 +611,9 @@ function tbRenderThreats(m){
       ${weakTypes.length ? `<div style="margin-top:6px;">Faiblesses de type : <span class="types-row" style="display:inline-flex;justify-content:flex-start;vertical-align:middle;">${weakTypes.map(t=>typeTagHTML(t)).join('')}</span></div>` : ''}
     </div>
     <div id="tbThreatList" style="margin-top:8px;">${threats.slice(0,40).map(i=>tbThreatRowHTML(i)).join('') || '<div class="tb-empty">Aucune menace sérieuse trouvée avec ce build.</div>'}</div>
-    <div class="tb-note">Chaque adversaire est testé avec son premier set prédéfini (Smogon s'il existe). Clique sur une menace pour l'ouvrir dans le comparateur.</div>`;
+    <div class="tb-note">Chaque adversaire est testé avec son set le plus joué en tournoi (à défaut, son premier set prédéfini). Clique sur une menace pour l'ouvrir dans le comparateur.</div>`;
   body.querySelectorAll('.tb-threat').forEach(btn=>{
-    btn.onclick = ()=>{ tbFoeKey = btn.dataset.key; tbFoePreset = 0; tbTab = 'compare'; tbRenderAnalysis(m); };
+    btn.onclick = ()=>{ tbSetFoe(tbEntryByKey(btn.dataset.key), 0); tbTab = 'compare'; tbRenderAnalysis(m); };
   });
 }
 

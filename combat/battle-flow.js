@@ -186,6 +186,8 @@ function startBattle(){
     trainer2 = null;
     enemyTeam = generateEnemyTeam(towerFloor, trainer.theme, trainer.boss);
   }
+  // Mécanique éventuelle du Boss (Méga, Téra, Capacité Z ou Dynamax) : voir combat/boss-mechanics.js.
+  if(trainer && trainer.boss && !isDouble) assignBossMechanic(enemyTeam, towerFloor);
   const playerRoster = team.map(m=>{
     const sp = speciesOf(m);
     const maxHp = m.computedStats.hp;
@@ -316,10 +318,20 @@ function runFoeDecisions(level){
   const targets = alivePlayerCombatants();
   const foes = aliveFoeCombatants();
   const excellent = !!((bs.trainer && bs.trainer.boss) || (bs.trainer2 && bs.trainer2.boss));
+  // Un Boss peut déclencher sa mécanique (voir combat/boss-mechanics.js) : elle est annoncée avant le tour.
+  const notes = [];
   const foeActions = foes.map(f=>{
     const { move, target } = chooseFoeMove(f, targets, level, excellent);
-    return { actor:f, move, target, isPlayer:false };
+    const mech = applyFoeMechanic(f, move, target);
+    if(mech.msg) notes.push(mech.msg);
+    return { actor:f, move:mech.move, target, isPlayer:false };
   });
+  if(notes.length){
+    renderBattle();
+    setLog(notes.map(n=>`<b>${n}</b>`).join(' '));
+    setTimeout(()=> resolveTurn([...bs.pendingActions, ...foeActions]), btDelay(1300));
+    return;
+  }
   resolveTurn([...bs.pendingActions, ...foeActions]);
 }
 // Changement volontaire de l'adversaire (combat simple) : ton Poursuite peut le frapper au départ, les pièges d'entrée et les

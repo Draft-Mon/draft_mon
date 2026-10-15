@@ -1,5 +1,6 @@
 /* ==== SOMMAIRE ====
-   Sets compétitifs (à la Smogon / Coup Critique) pour les Pokémon les plus notables du jeu : talent,
+   Sets compétitifs. En priorité les sets de tournoi de pokemon/tournament-sets.js (jusqu'à 5 par espèce,
+   voir tournamentSetsFor), sinon les sets curés ci-dessous (à la Smogon / Coup Critique) : talent,
    objet, nature et répartition d'EV "réelle" (échelle 0-252 classique, convertie à la volée vers
    l'échelle 0-32 du jeu via convertRealEvs), plus un moveset signature. Utilisés par le mode Facile
    (draft/draft-facile.js) pour les builds du joueur, et par la Tour (combat/tower.js) pour les
@@ -18,6 +19,12 @@ function convertRealEvs(realEvs){
   Object.keys(out).forEach(k=>{
     out[k] = Math.max(0, Math.min(EV_MAX, Math.round((realEvs[k]||0) / 252 * EV_MAX)));
   });
+  // Les arrondis peuvent dépasser le total autorisé d'un point ou deux : on les retire des plus petites stats.
+  let over = Object.values(out).reduce((a,v)=>a+v,0) - EV_TOTAL_MAX;
+  while(over>0){
+    const k = Object.keys(out).filter(s=>out[s]>0).sort((a,b)=>out[a]-out[b])[0];
+    out[k]--; over--;
+  }
   return out;
 }
 // Trouve la Nature correspondant à un couple (stat boostée, stat réduite) façon Smogon ; nature neutre si non précisé.
@@ -25,9 +32,34 @@ function natureFor(plus, minus){
   if(!plus || !minus) return NATURES.find(n=>!n.plus) || NATURES[0];
   return NATURES.find(n=>n.plus===plus && n.minus===minus) || NATURES[0];
 }
-// Renvoie le set curé d'une espèce si on en a un ET qu'il est valide pour ce membre précis (talent
-// réellement disponible pour cette espèce) ; sinon null (l'appelant utilise alors l'algorithme habituel).
-function competitiveSetFor(sp, line){
+// Objet d'un set utilisable par la Tour et le mode Facile : un objet de combat ordinaire. Les objets de
+// forme (Méga-Gemmes, Plaques...) et les Cristaux Z restent réservés au joueur et au Builder.
+function setItemAllowed(key){
+  const it = key && ITEMS[key];
+  return !!it && !it.formItem && !it.megaStone && !/^zCrystal/.test(key);
+}
+// Sets de compétition d'une espèce (pokemon/tournament-sets.js, jusqu'à 5) valides pour elle, au format
+// des sets curés (+ weight : poids de tirage, format : format d'origine). Les sets de Méga-Évolution sont
+// écartés : leurs attaques et EV sont pensés pour la forme Méga, que les adversaires n'utilisent pas.
+function tournamentSetsFor(sp, line){
+  const list = (typeof TOURNAMENT_SETS !== 'undefined' && TOURNAMENT_SETS[sp.name]) || [];
+  const abilities = sp.abilities || (line && line.abilities) || [];
+  return list.filter(s=> (!s.a || abilities.includes(s.a)) && !(s.i && ITEMS[s.i] && ITEMS[s.i].megaStone))
+    .map(s=>({ ability:s.a || null, item:setItemAllowed(s.i) ? s.i : null, plus:s.p || null, minus:s.m || null,
+      evs:s.e || {}, moves:s.mv || [], teraType:s.t || null, weight:s.w || 10, format:s.f }));
+}
+// Renvoie un set compétitif valide pour cette espèce : le plus joué en tournoi, ou, avec random, un des
+// sets de tournoi tiré au hasard selon leur poids (la Tour : un même Pokémon n'a pas toujours le même
+// set). À défaut, le set curé du jeu s'il est valide (talent réellement disponible pour cette espèce) ;
+// sinon null (l'appelant utilise alors l'algorithme habituel).
+function competitiveSetFor(sp, line, random){
+  const sets = tournamentSetsFor(sp, line);
+  if(sets.length){
+    if(!random) return sets[0];
+    let r = Math.random() * sets.reduce((a,s)=>a+s.weight, 0);
+    for(const s of sets){ r -= s.weight; if(r<=0) return s; }
+    return sets[sets.length-1];
+  }
   const entry = (typeof COMPETITIVE_SETS !== 'undefined') ? COMPETITIVE_SETS[sp.name] : null;
   if(!entry) return null;
   const abilities = sp.abilities || (line && line.abilities) || [];

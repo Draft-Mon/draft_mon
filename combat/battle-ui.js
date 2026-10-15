@@ -206,7 +206,7 @@ function renderMoveGrid(){
   } else {
     const available = canDynamax(p, bs) && !bs.declaringZMove && !bs.declaringTera && !bs.declaringMega && !mechActive;
     mechGrid.appendChild(buildMechButton(phIcon('circle'),'Dynamax', available, bs.declaringDynamax,
-      bs.declaringDynamax ? 'Dynamax activé — clique pour annuler' : (available ? 'Toutes les capacités offensives deviennent Max pendant 3 tours' : (bs.dynamaxUsed ? 'Déjà utilisé ce combat' : 'Indisponible pour le moment')),
+      bs.declaringDynamax ? 'Dynamax activé — clique pour annuler' : (available ? 'Toutes les capacités offensives deviennent Max pendant 3 tours' : (bs.dynamaxUsed ? 'Déjà utilisé ce combat' : (!hasKeyItem('braceletDynamax') ? 'Nécessite le Bracelet Dynamax (Pokéshop, onglet Bracelets)' : 'Indisponible pour le moment'))),
       ()=>{ bs.declaringDynamax = !bs.declaringDynamax; if(bs.declaringDynamax){ bs.declaringZMove = false; bs.declaringTera = false; bs.declaringMega = false; } renderMoveGrid(); }));
     if(!available) bs.declaringDynamax = false;
   }
@@ -220,6 +220,7 @@ function renderMoveGrid(){
     if(bs.declaringMega) megaTip = 'Méga-Évolution activée — clique pour annuler';
     else if(available) megaTip = 'Se Méga-Évolue au prochain coup, pour le reste du combat';
     else if(bs.megaUsed) megaTip = 'Déjà utilisée ce combat';
+    else if(!hasKeyItem('megaBracelet')) megaTip = 'Nécessite le Méga-Bracelet (Pokéshop, onglet Bracelets)';
     else if(!p.megaFormData) megaTip = 'Nécessite la Méga-Gemme correspondante en objet tenu';
     else megaTip = 'Indisponible pour le moment';
     mechGrid.appendChild(buildMechButton(phIcon('diamond'),'Méga', available, bs.declaringMega, megaTip,
@@ -243,6 +244,7 @@ function renderMoveGrid(){
   if(bs.declaringZMove) zTip = 'Capacité Z activée — clique pour annuler, ou choisis la capacité à surboosster';
   else if(zAvailable) zTip = 'Choisis ensuite la capacité offensive à transformer en Capacité Z (une fois par combat)';
   else if(bs.zMoveUsed) zTip = 'Déjà utilisée ce combat';
+  else if(!hasKeyItem('braceletZ')) zTip = 'Nécessite le Bracelet Z (Pokéshop, onglet Bracelets)';
   else if(!zCrystalHeldBy(p)) zTip = "Nécessite un Cristal Z en objet tenu, du même type qu'une de tes attaques offensives";
   else zTip = 'Indisponible : aucune attaque offensive du type du Cristal Z avec des PP restants';
   mechGrid.appendChild(buildMechButton(phIcon('lightning'),'Z', zAvailable || bs.declaringZMove, bs.declaringZMove, zTip,

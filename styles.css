@@ -1465,6 +1465,9 @@ button.tb-threat:hover{ border-color:var(--accent); }
 .tb-src{ font-size:8px; font-weight:700; text-transform:uppercase; padding:1px 5px; border-radius:3px; background:rgba(255,255,255,.08); color:var(--text-dim); }
 .tb-src-smogon{ background:rgba(107,79,160,.25); color:#c3aee6; }
 .tb-src-jeu{ background:rgba(255,201,77,.16); color:var(--accent-light); }
+.tb-src-tournoi{ background:rgba(63,169,201,.2); color:#7ecbe0; }
+.tb-src-vgc{ background:rgba(122,199,76,.18); color:#a6dc86; }
+.tb-foe-editor{ border:1px solid var(--line); border-radius:6px; padding:2px 10px 10px; margin-top:8px; background:rgba(0,0,0,.18); }
 .tb-pick-list{ max-height:52dvh; overflow-y:auto; border:1px solid var(--line); border-radius:6px; }
 .tb-pick-row{
   display:flex; align-items:center; gap:8px; width:100%; padding:5px 8px; cursor:pointer; background:none; border:none;

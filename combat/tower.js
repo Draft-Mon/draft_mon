@@ -338,9 +338,9 @@ function pickFoeItem(sp, moveIds, floor, bossLike){
 }
 
 // Construit un combattant adverse complet : stats (EV et nature optimisés avec la progression), attaques, talent, objet.
-// Plus l'étage est élevé, plus ce Pokémon a de chances d'utiliser un vrai set compétitif curé (à la
-// Smogon/Coup Critique — voir pokemon/competitive-sets.js) : talent, objet, nature, EV et moveset
-// signature, plutôt que la logique générique ci-dessous (qui reste utilisée pour les espèces non
+// Plus l'étage est élevé, plus ce Pokémon a de chances d'utiliser un vrai set compétitif : un des
+// sets joués en tournoi pour son espèce (jusqu'à 5, tiré au hasard — voir pokemon/tournament-sets.js et
+// competitiveSetFor) avec talent, objet, nature, EV et attaques, plutôt que la logique générique ci-dessous (qui reste utilisée pour les espèces non
 // couvertes par un set curé, ou tôt dans la Tour).
 function buildFoeMember(spec, floor, strength, bossLike, level){
   const { line, id, stage, branch, sp } = spec;
@@ -354,7 +354,7 @@ function buildFoeMember(spec, floor, strength, bossLike, level){
   const main = phys ? 'atk' : 'spa', opposite = phys ? 'spa' : 'atk';
   const movepool = movepoolFor({lineId:id, stage, branch});
   const curatedChance = Math.min(1, Math.max(0, (floor-4)*0.1));
-  const curated = floor >= 5 && Math.random() < curatedChance ? competitiveSetFor(sp, line) : null;
+  const curated = floor >= 5 && Math.random() < curatedChance ? competitiveSetFor(sp, line, true) : null;
   let nature, ability, moveIds;
   if(curated){
     nature = natureFor(curated.plus, curated.minus);
@@ -362,7 +362,7 @@ function buildFoeMember(spec, floor, strength, bossLike, level){
     const fullTotal = Object.values(fullEvs).reduce((a,v)=>a+v,0) || 1;
     const scale = Math.min(1, totalEv/fullTotal);
     Object.keys(evs).forEach(k=>{ evs[k] = Math.min(EV_MAX, Math.round(fullEvs[k]*scale)); });
-    ability = curated.ability;
+    ability = curated.ability || rand(sp.abilities || line.abilities);
     moveIds = resolveSetMoves(curated, movepool, sp, floor);
   } else {
     // À partir de l'étage 5, de plus en plus d'adversaires ont une répartition d'EV et une nature pensées pour leur rôle.
@@ -391,7 +391,7 @@ function buildFoeMember(spec, floor, strength, bossLike, level){
   const stats = calcStats(sp.base, ivs, evs, nature, level);
   return {
     lineId:id, stage, branch, name:sp.name, types:sp.types, unownForm: pickFormSprite(sp.name), moveObjs: moveIds.map(mid=>MOVES[mid]), ppCur: moveIds.map(mid=>basePP(MOVES[mid])),
-    ability, level: level||LEVEL,
+    ability, level: level||LEVEL, ivs, evs, nature,
     heldItem: (curated && curated.item) || pickFoeItem(sp, moveIds, floor, bossLike), itemUsed:false,
     stats, maxHp: stats.hp, hp: stats.hp, ...freshBattleFields()
   };

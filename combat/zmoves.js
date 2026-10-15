@@ -53,7 +53,7 @@ function eligibleZMoveIndexes(p){
 }
 // Vrai si ce Pokémon peut déclarer une Capacité Z ce combat (pas déjà utilisée, au moins une capacité éligible).
 function canDeclareZMove(p, bs){
-  if(!p || !bs || bs.zMoveUsed) return false;
+  if(!p || !bs || bs.zMoveUsed || !hasKeyItem('braceletZ')) return false;
   return eligibleZMoveIndexes(p).length>0;
 }
 // Transforme une capacité de base en Capacité Z : puissance selon la table officielle, toujours

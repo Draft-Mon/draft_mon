@@ -3,6 +3,7 @@ const SHOP_CATEGORIES = [
   {key:'potion', label:phIcon('pill')+' Potions'},
   {key:'baie', label:phIcon('cherries')+' Baies'},
   {key:'strat', label:phIcon('medal')+' Stratégiques'},
+  {key:'cle', label:phIcon('key')+' Bracelets'},
   {key:'vendre', label:phIcon('hand-coins')+' Vendre'}
 ];
 // Revente d'un objet du sac (Pokéshop et Marchand Itinérant) : SELL_RATE du prix d'achat de base.
@@ -59,7 +60,7 @@ function renderPokeshopPanel(){
         <div style="font-size:9px;color:var(--text-dim);line-height:1.4;">${item.desc}</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;align-items:stretch;">
-        ${selling ? '' : `<button class="btn secondary buyBtn" data-key="${key}" style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${price} ${phIcon('coins')}${discount>0?` <span style="text-decoration:line-through;opacity:.5;font-size:8px;">${item.price}</span>`:''}</button>`}
+        ${selling ? '' : `<button class="btn secondary buyBtn" data-key="${key}" ${item.kind==='key' && owned>0 ? 'disabled' : ''} style="width:auto;flex-shrink:0;min-height:0;padding:6px 10px;font-size:10px;white-space:nowrap;">${price} ${phIcon('coins')}${discount>0?` <span style="text-decoration:line-through;opacity:.5;font-size:8px;">${item.price}</span>`:''}</button>`}
         ${sellBtnHTML(key)}
       </div>
     `;
@@ -70,6 +71,7 @@ function renderPokeshopPanel(){
       const key = btn.dataset.key;
       const item = ITEMS[key];
       const price = Math.round(item.price * (1 - metaShopDiscount()));
+      if(item.kind==='key' && (bag[key]||0)>0) return; // un objet clé ne s'achète qu'une fois
       if(money < price){ setVillageMsg("Pas assez d'argent !"); return; }
       money -= price;
       bag[key] = (bag[key]||0)+1;

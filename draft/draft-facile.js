@@ -63,7 +63,7 @@ function autoBuildMember(lineId, stage, branch){
   // quel (talent, objet, nature, EV, moveset) plutôt que l'heuristique générique ci-dessous.
   const curated = competitiveSetFor(sp, line);
   if(curated){
-    member.ability = curated.ability;
+    member.ability = curated.ability || abilities[0];
     member.heldItem = curated.item || null;
     member.nature = natureFor(curated.plus, curated.minus);
     member.evs = convertRealEvs(curated.evs);

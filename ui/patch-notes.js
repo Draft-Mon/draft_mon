@@ -28,6 +28,61 @@ const PATCH_NOTES = [
             ]
           }
         ]
+      },
+      {
+        version: 'v0.12.2',
+        title: 'v0.12.2 — Sets de tournoi',
+        categories: [
+          {
+            icon: phIcon('trophy'), label: 'Sets de tournoi',
+            items: [
+              "Nouveaux sets tirés des statistiques des tournois et parties classées de Smogon/Pokémon Showdown (septembre 2026), Pokémon Champions en priorité : jusqu'à 5 sets par Pokémon pour 717 espèces",
+              "Tour : un adversaire n'a plus un seul set possible, il en tire un au hasard parmi ses sets de tournoi (les plus joués sortent plus souvent)",
+              "Mode Facile : chaque Pokémon reçoit son set le plus joué en tournoi"
+            ]
+          },
+          {
+            icon: phIcon('wrench'), label: 'Builder d’équipe',
+            items: [
+              "Nouveaux sets prédéfinis « Tournoi » (les mêmes que ceux de la Tour, plus les sets de Méga-Évolution) et « VGC » (le plus joué en combat double), en plus des analyses Smogon",
+              "Comparateur : le bouton « Personnaliser » permet de modifier entièrement l'adversaire (objet, talent, nature, EV, IV, type Téracristal, attaques), à partir d'un set prédéfini ou non ; il reste sauvegardé",
+              "Menaces : chaque adversaire est testé avec son set le plus joué en tournoi"
+            ]
+          },
+          {
+            icon: phIcon('bug'), label: 'Corrections',
+            items: [
+              "Les Méga-Gemmes de l'extension Méga-Dimension (dont la Floréclatite) et les Méga-Gemmes Z ont maintenant leur vrai sprite"
+            ]
+          }
+        ]
+      },
+      {
+        version: 'v0.12.3',
+        title: 'v0.12.3 — Bracelets & mécaniques des Boss',
+        categories: [
+          {
+            icon: phIcon('key'), label: 'Bracelets',
+            items: [
+              "Nouvel onglet « Bracelets » au Pokéshop : Méga-Bracelet, Bracelet Z et Bracelet Dynamax",
+              "Il faut maintenant le bracelet correspondant pour Méga-Évoluer, utiliser une Capacité Z ou Dynamaxer (un seul achat par partie) ; la Téracristallisation demande toujours l'Orbe Téracristal"
+            ]
+          },
+          {
+            icon: phIcon('crown'), label: 'Boss',
+            items: [
+              "Les Maîtres de Type peuvent désormais utiliser une mécanique : Méga-Évolution, Téracristallisation, Capacité Z ou Dynamax, tirée au hasard",
+              "Un Boss n'en a une que si tu as toi-même débloqué une mécanique (un bracelet ou un Orbe Téracristal) ; à partir de l'étage 50, il en a toujours une",
+              "C'est l'as de son équipe (son dernier Pokémon) qui s'en sert, une fois par combat ; les Mini-Boss et les dresseurs normaux n'en ont pas"
+            ]
+          },
+          {
+            icon: phIcon('bug'), label: 'Corrections',
+            items: [
+              "Le Facteur Gigamax a sa propre icône (il partageait celle du Bracelet Dynamax)"
+            ]
+          }
+        ]
       }
     ],
     categories: [

@@ -8,10 +8,10 @@
    seulement pendant ce combat précis (megaFormData/megaStats précalculés à l'entrée en combat).
    - canMegaEvolve / activateMegaEvolve : condition d'activation + application de l'effet
 ==== */
-// Vrai si ce Pokémon peut se Méga-Évoluer ce combat (pas déjà utilisé côté joueur, tient la bonne
-// Méga-Gemme, pas déjà Méga-Évolué).
+// Vrai si ce Pokémon peut se Méga-Évoluer ce combat (Méga-Bracelet dans le sac, pas déjà utilisé côté
+// joueur, tient la bonne Méga-Gemme, pas déjà Méga-Évolué).
 function canMegaEvolve(p, bs){
-  if(!p || !bs || bs.megaUsed || p.megaEvolved) return false;
+  if(!p || !bs || bs.megaUsed || p.megaEvolved || !hasKeyItem('megaBracelet')) return false;
   return !!p.megaFormData;
 }
 // Déclenche la Méga-Évolution : remplace nom/types/talent/stats par la forme précalculée. Les PV

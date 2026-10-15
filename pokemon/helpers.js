@@ -15,6 +15,16 @@ function speciesOf(member){
   if(base.forms && member.heldItem && !(item && item.megaStone) && base.forms[member.heldItem]) return base.forms[member.heldItem];
   return base;
 }
+// Clé de la Méga-Évolution accessible à un membre sous l'espèce sp : sa Méga-Gemme tenue, ou pour
+// Rayquaza la connaissance de Draco-Ascension (seule Méga-Évolution sans Méga-Gemme, comme dans les
+// vrais jeux ; forme rangée sous la clé 'dragonascent'). null s'il n'en a pas.
+function megaFormKey(member, sp){
+  if(!sp || !sp.forms) return null;
+  const item = member.heldItem && ITEMS[member.heldItem];
+  if(item && item.megaStone && sp.forms[member.heldItem]) return member.heldItem;
+  if(sp.forms.dragonascent && (member.moves||[]).includes('dragonascent')) return 'dragonascent';
+  return null;
+}
 // Talents disponibles pour un membre (ceux du stade/branche s'ils existent, sinon ceux de la lignée).
 function abilitiesFor(member){
   const line = lineOf(member.lineId);

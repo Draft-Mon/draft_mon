@@ -152,6 +152,9 @@ const FORM_SPRITE_IDS = {
   'Méga-Camérupt':10087, 'Méga-Lockpin':10088, 'Méga-Drattak':10089, 'Méga-Dardargnan':10090,
   // ---- Méga-Évolutions Z (Légendes Z-A : Méga-Dimension) ----
   'Méga-Absol Z':10307, 'Méga-Carchacrok Z':10309, 'Méga-Lucario Z':10310,
+  // ---- Méga-Évolutions ajoutées en v0.12.1 (classiques manquantes, puis Méga-Dimension) ----
+  'Méga-Mewtwo X':10043, 'Méga-Jungko':10065, 'Méga-Braségali':10050, 'Méga-Laggron':10064, 'Méga-Latias':10062, 'Méga-Latios':10063, 'Méga-Rayquaza':10079, 'Méga-Diancie':10075,
+  'Méga-Raichu X':10304, 'Méga-Raichu Y':10305, 'Méga-Éoko':10306, 'Méga-Étouraptor':10308, 'Méga-Heatran':10311, 'Méga-Darkrai':10312, 'Méga-Golemastoc':10313, 'Méga-Mistigrix':10314, 'Méga-Crabominable':10315, 'Méga-Sarmuraï':10316, 'Méga-Magearna':10317, 'Méga-Zeraora':10319, 'Méga-Scovilain':10320, 'Méga-Floréclat':10321, 'Méga-Nigirigon':10322, 'Méga-Glaivodo':10325,
   // ---- Formes liées à un objet tenu (légendaires de Galar, Ogerpon) ----
   'Zacian (Épée Sacrée)':10188, 'Zamazenta (Bouclier Royal)':10189,
   'Sylveroy (Monture Glace)':10193, 'Sylveroy (Monture Spectre)':10194,

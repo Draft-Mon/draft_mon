@@ -155,7 +155,7 @@ function slotSummaryHTML(slot){
   }
   const diffLabel = info.difficulty==='facile' ? phIcon('smiley')+' Facile' : (info.difficulty==='difficile' ? phIcon('skull')+' Difficile' : phIcon('sword')+' Normal');
   let dateLabel = '';
-  try { if(info.savedAt) dateLabel = new Date(info.savedAt).toLocaleDateString('fr-FR'); } catch(e){}
+  try { if(info.savedAt) dateLabel = new Date(info.savedAt).toLocaleDateString(I18N.locale); } catch(e){}
   const battleLabel = info.battleInProgress ? ` · ${phIcon('sword')} Combat en pause` : '';
   return `<div style="font-size:9px;color:var(--text-main);">Étage ${info.floor} · ${diffLabel} · ${info.teamCount} Pokémon${dateLabel?' · '+dateLabel:''}${battleLabel}</div>`;
 }

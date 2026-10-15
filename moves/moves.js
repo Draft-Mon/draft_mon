@@ -247,7 +247,7 @@ const MOVES = {
   thief:{pp:10,name:"Larcin",type:'tenebres',cat:'phys',power:60,stealItem:true,accuracy:1,desc:"Une attaque sournoise qui déroberait normalement l'objet tenu de la cible."},
   spiderweb:{pp:10,name:"Toile",type:'insecte',cat:'status',power:0,accuracy:1,target:'foe',effect:{trap:true},desc:"Emprisonne la cible dans une toile qui l'empêche de fuir."},
   mindreader:{pp:5,name:"Lire-Esprit",type:'normal',cat:'status',power:0,target:'self',effect:{lockOn:true},desc:"Verrouille la cible : la prochaine capacité ne pourra pas rater."},
-  nightmare:{pp:15,name:"Cauchemar",type:'fantome',cat:'status',power:0,accuracy:1,target:'foe',effect:{nightmare:true},desc:"Plonge la cible endormie dans un cauchemar : elle perd 1/4 de ses PV Ã  chaque tour tant qu'elle dort."},
+  nightmare:{pp:15,name:"Cauchemar",type:'fantome',cat:'status',power:0,accuracy:1,target:'foe',effect:{nightmare:true},desc:"Plonge la cible endormie dans un cauchemar : elle perd 1/4 de ses PV à chaque tour tant qu'elle dort."},
   flamewheel:{pp:25,name:"Roue de Feu",type:'feu',cat:'phys',power:60,accuracy:1,secondaryStatus:{status:'brulure',chance:0.1},desc:"Une roue de flammes qui peut brûler la cible."},
   snore:{pp:15,name:"Ronflement",type:'normal',cat:'spec',power:50,accuracy:1,selfSleepOnly:true,flinch:0.3,desc:"Une attaque utilisable uniquement en dormant. Peut faire peur."},
   curse:{pp:10,name:"Malédiction",type:'fantome',cat:'status',power:0,target:'self',effect:{selfBoost:[{stat:'atk',stages:1},{stat:'def',stages:1},{stat:'spe',stages:-1}]},desc:"Un rituel qui booste l'Attaque et la Défense au prix de la Vitesse."},

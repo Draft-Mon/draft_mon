@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!-- Traduction de faq.html : à mettre à jour à la main si la page française change. -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<base href="../">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preguntas frecuentes de Draft Mon — juego de Pokémon gratis en línea</title>
+<meta name="description" content="¿Draft Mon es gratis? ¿Funciona en el móvil? ¿Cómo se guarda la partida? Todas las respuestas sobre este roguelike de Pokémon para navegador.">
+<link rel="canonical" href="https://draft-mon.github.io/draft_mon/es/faq.html">
+<meta name="theme-color" content="#120F0C">
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Draft Mon">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Preguntas frecuentes de Draft Mon — juego de Pokémon gratis en línea">
+<meta property="og:description" content="¿Draft Mon es gratis? ¿Funciona en el móvil? ¿Cómo se guarda la partida? Todas las respuestas sobre este roguelike de Pokémon para navegador.">
+<meta property="og:url" content="https://draft-mon.github.io/draft_mon/es/faq.html">
+<meta property="og:image" content="https://draft-mon.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/image/logo/favicon-64.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/image/logo/icon-192.png">
+<link rel="apple-touch-icon" href="assets/image/logo/apple-touch-icon.png">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es Draft Mon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Draft Mon es un roguelike de Pokémon. Eliges un equipo de 6 Pokémon, lo preparas y luego subes una Torre Batalla piso a piso hasta que te derrotan. Cada partida es distinta, y parte del progreso se conserva de una partida a otra."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Draft Mon es gratis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, totalmente. No hay compras, ni publicidad, ni cuenta que crear."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay que instalar o descargar algo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El juego funciona directamente en el navegador: basta con abrir la página y pulsar «Jugar»."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El juego funciona en el móvil?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. La interfaz se adapta al móvil (vertical y horizontal), a la tableta y al ordenador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo se guarda mi partida?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El progreso se guarda en tu navegador, en 5 ranuras de guardado. No se envía nada a ningún servidor. A cambio, la partida no te sigue de un dispositivo a otro y desaparece si borras los datos del sitio en tu navegador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántos Pokémon hay en el juego?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La Pokédex cubre las nueve generaciones, de Kanto a Paldea: más de 1000 Pokémon, con sus formas regionales (Alola, Galar, Hisui, Paldea), las megaevoluciones y las formas Gigamax."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué mecánicas de combate hay?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La Megaevolución, los Movimientos Z, el Dinamax y el Gigamax, y la Teracristalización. Cada una depende de un objeto equipado y se activa con un botón durante el combate. También hay combates dobles contra gemelos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre Fácil, Normal y Difícil?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En Fácil, el draft solo ofrece Pokémon totalmente evolucionados con un build listo para usar. En Normal se ofrecen todas las fases y tú configuras naturaleza, EV, habilidad y movimientos. Difícil añade una condición: los PS y los problemas de estado se mantienen de un combate a otro, mientras que en los otros dos modos se restauran."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa cuando pierdo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La partida termina, pero ganas Fichas de Torre según los pisos superados. Sirven para comprar Mejoras iniciales permanentes: dinero, objetos iniciales, descuentos en la Tienda Pokémon o un cambio gratis en el draft. Los Caramelos de Afinidad y los niveles de Afinidad también se conservan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Para qué sirven los Caramelos de Afinidad?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Suben el nivel de Afinidad de una línea de Pokémon con el Profesor. Una línea de nivel alto aparece más a menudo en el draft y en el Rancho, hasta el doble en el nivel máximo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se pueden conseguir Pokémon variocolor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Cada Pokémon ofrecido en el draft o en el Rancho tiene un 0,2 % de probabilidades de ser variocolor. Hay que elegirlo cuando se ofrece; si no, la oportunidad se pierde."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué es el Creador de equipos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una herramienta independiente de las partidas, accesible desde la pantalla de inicio. Permite crear hasta 10 equipos sin restricciones, comparar el daño entre dos Pokémon, detectar las amenazas para un build e importar o exportar en formato Pokémon Showdown."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Quién ha hecho el logo y el banner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Son imágenes provisionales generadas por IA: Draft Mon sigue en beta. Si eres artista y te gustaría ofrecer tus servicios para el logo, el banner u otras ilustraciones, escríbeme en el Discord del juego."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Draft Mon es un juego oficial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Draft Mon es un proyecto de fans sin ánimo de lucro, sin relación con Nintendo, Game Freak ni The Pokémon Company. Pokémon y los nombres asociados son marcas de sus respectivos propietarios."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo informo de un error o propongo una idea?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En el Discord del juego."
+      }
+    }
+  ]
+}
+</script>
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
+</head>
+<body>
+<div class="app">
+  <div class="site-header">
+    <div class="header-actions">
+      <a class="header-icon-btn discord-btn" href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer" title="Únete al Discord" aria-label="Únete al Discord">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6605a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      </a>
+    </div>
+    <span class="site-logo">DRAFT MON</span>
+    <span class="site-subtitle">◆ TORRE BATALLA ◆</span>
+  </div>
+
+    <div class="doc-page">
+    <a class="btn secondary doc-back" href="es/" style="width:auto;padding:8px 14px;font-size:11px;"><i class="ph-bold ph-arrow-left"></i> Volver al juego</a>
+
+    <h1>Preguntas frecuentes sobre Draft Mon</h1>
+    <p class="doc-lead">Las respuestas a las preguntas más habituales sobre el juego. Para las reglas completas, consulta la <a href="es/guide.html">guía del juego</a>.</p>
+
+    <h2>¿Qué es Draft Mon?</h2>
+    <p>Draft Mon es un roguelike de Pokémon. Eliges un equipo de 6 Pokémon, lo preparas y luego subes una Torre Batalla piso a piso hasta que te derrotan. Cada partida es distinta, y parte del progreso se conserva de una partida a otra.</p>
+
+    <h2>¿Draft Mon es gratis?</h2>
+    <p>Sí, totalmente. No hay compras, ni publicidad, ni cuenta que crear.</p>
+
+    <h2>¿Hay que instalar o descargar algo?</h2>
+    <p>No. El juego funciona directamente en el navegador: basta con abrir la página y pulsar «Jugar».</p>
+
+    <h2>¿El juego funciona en el móvil?</h2>
+    <p>Sí. La interfaz se adapta al móvil (vertical y horizontal), a la tableta y al ordenador.</p>
+
+    <h2>¿Cómo se guarda mi partida?</h2>
+    <p>El progreso se guarda en tu navegador, en 5 ranuras de guardado. No se envía nada a ningún servidor. A cambio, la partida no te sigue de un dispositivo a otro y desaparece si borras los datos del sitio en tu navegador.</p>
+
+    <h2>¿Cuántos Pokémon hay en el juego?</h2>
+    <p>La Pokédex cubre las nueve generaciones, de Kanto a Paldea: más de 1000 Pokémon, con sus formas regionales (Alola, Galar, Hisui, Paldea), las megaevoluciones y las formas Gigamax.</p>
+
+    <h2>¿Qué mecánicas de combate hay?</h2>
+    <p>La Megaevolución, los Movimientos Z, el Dinamax y el Gigamax, y la Teracristalización. Cada una depende de un objeto equipado y se activa con un botón durante el combate. También hay combates dobles contra gemelos.</p>
+
+    <h2>¿Qué diferencia hay entre Fácil, Normal y Difícil?</h2>
+    <p>En Fácil, el draft solo ofrece Pokémon totalmente evolucionados con un build listo para usar. En Normal se ofrecen todas las fases y tú configuras naturaleza, EV, habilidad y movimientos. Difícil añade una condición: los PS y los problemas de estado se mantienen de un combate a otro, mientras que en los otros dos modos se restauran.</p>
+
+    <h2>¿Qué pasa cuando pierdo?</h2>
+    <p>La partida termina, pero ganas Fichas de Torre según los pisos superados. Sirven para comprar Mejoras iniciales permanentes: dinero, objetos iniciales, descuentos en la Tienda Pokémon o un cambio gratis en el draft. Los Caramelos de Afinidad y los niveles de Afinidad también se conservan.</p>
+
+    <h2>¿Para qué sirven los Caramelos de Afinidad?</h2>
+    <p>Suben el nivel de Afinidad de una línea de Pokémon con el Profesor. Una línea de nivel alto aparece más a menudo en el draft y en el Rancho, hasta el doble en el nivel máximo.</p>
+
+    <h2>¿Se pueden conseguir Pokémon variocolor?</h2>
+    <p>Sí. Cada Pokémon ofrecido en el draft o en el Rancho tiene un 0,2 % de probabilidades de ser variocolor. Hay que elegirlo cuando se ofrece; si no, la oportunidad se pierde.</p>
+
+    <h2>¿Qué es el Creador de equipos?</h2>
+    <p>Una herramienta independiente de las partidas, accesible desde la pantalla de inicio. Permite crear hasta 10 equipos sin restricciones, comparar el daño entre dos Pokémon, detectar las amenazas para un build e importar o exportar en formato Pokémon Showdown.</p>
+
+    <h2>¿Quién ha hecho el logo y el banner?</h2>
+    <p>Son imágenes provisionales generadas por IA: Draft Mon sigue en beta. Si eres artista y te gustaría ofrecer tus servicios para el logo, el banner u otras ilustraciones, escríbeme en el <a href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer">Discord del juego</a>.</p>
+
+    <h2>¿Draft Mon es un juego oficial?</h2>
+    <p>No. Draft Mon es un proyecto de fans sin ánimo de lucro, sin relación con Nintendo, Game Freak ni The Pokémon Company. Pokémon y los nombres asociados son marcas de sus respectivos propietarios.</p>
+
+    <h2>¿Cómo informo de un error o propongo una idea?</h2>
+    <p>En el <a href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer">Discord del juego</a>.</p>
+
+    <p style="margin-top:28px;"><a class="btn" href="es/" style="display:inline-flex;width:auto;text-decoration:none;">▶ Jugar a Draft Mon</a></p>
+
+    <nav class="doc-footer" aria-label="Páginas del sitio">
+      <a href="es/">Jugar</a>
+      <a href="es/guide.html">Guía</a>
+      <a href="es/faq.html" aria-current="page">Preguntas frecuentes</a>
+      <a href="es/notes-de-mise-a-jour.html">Novedades</a>
+      <a href="confidentialite.html">Privacidad (en francés)</a>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

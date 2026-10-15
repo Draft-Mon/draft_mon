@@ -6,6 +6,10 @@
 <title>Draft Mon — Jeu Pokémon roguelike gratuit par navigateur</title>
 <meta name="description" content="Draft Mon est un jeu Pokémon gratuit par navigateur : drafte 6 Pokémon, prépare ton équipe et grimpe la Tour de Combat étage par étage, face aux Mini-Boss et aux Maîtres de Type.">
 <link rel="canonical" href="https://draft-mon.github.io/draft_mon/">
+<link rel="alternate" hreflang="fr" href="https://draft-mon.github.io/draft_mon/">
+<link rel="alternate" hreflang="en" href="https://draft-mon.github.io/draft_mon/en/">
+<link rel="alternate" hreflang="es" href="https://draft-mon.github.io/draft_mon/es/">
+<link rel="alternate" hreflang="x-default" href="https://draft-mon.github.io/draft_mon/">
 <meta name="theme-color" content="#120F0C">
 <meta name="google-site-verification" content="8roy83PJgHsvhclD12PbWZSXPzMrOBeTeF2h97uwIxI">
 <meta property="og:type" content="website">
@@ -63,7 +67,7 @@
     if(!m) return;
     try {
       var hasData = false;
-      for(var i=0;i<localStorage.length;i++){ if(localStorage.key(i).indexOf('draftArena')===0){ hasData = true; break; } }
+      for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k.indexOf('draftArena')===0 && k!=='draftArenaLang'){ hasData = true; break; } }
       if(!hasData){
         var data = JSON.parse(decodeURIComponent(m[1]));
         Object.keys(data).forEach(function(k){
@@ -72,6 +76,27 @@
       }
     } catch(e){}
     history.replaceState(null, '', location.pathname + location.search);
+  })();
+</script>
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
   })();
 </script>
 </head>
@@ -507,6 +532,7 @@
 </div>
 
 
+<script defer src="core/i18n.js"></script>
 <script defer src="core/rng.js"></script>
 <script defer src="core/type-chart.js"></script>
 <script defer src="core/natures.js"></script>

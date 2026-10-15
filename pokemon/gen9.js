@@ -99,7 +99,9 @@ const LINES_GEN9 = [
 {id:'capsakid',abilities:['Chlorophylle','Insomnia','Maladresse'],moveIds:['gigadrain','spicyextract','solarbeam','flamethrower','protect','endure','hyperbeam','facade','sleeptalk','rest','sunnyday','takedown','thief','zenheadbutt','scaryface','fireblast','bulletseed','willowisp','magicalleaf','firespin','overheat','headbutt','leer','bite','growth','razorleaf','crunch','leafage','firefang','thunderfang','rollout','ingrain','leechseed','substitute','helpinghand','worryseed','seedbomb','energyball','leafstorm','grassknot','ragepowder','terablast','flareblitz','gigaimpact','doublehit','temperflare','burningjealousy','endeavor','grassyglide','grassyterrain','lashout','sandstorm','stompingtantrum','superfang','swagger','trailblaze'],
  stages:[
   {name:'Pimito',types:['plante'],base:st(50,62,40,62,40,50)},
-  {name:'Scovilain',types:['plante','feu'],base:st(65,108,65,108,65,75),abilities:['Chlorophylle','Insomnia','Lunatique']}]},
+  {name:'Scovilain',types:['plante','feu'],base:st(65,108,65,108,65,75),abilities:['Chlorophylle','Insomnia','Lunatique'],forms:{
+    scovillainite:{name:'Méga-Scovilain',types:['plante','feu'],base:st(65,138,85,138,85,75),abilities:['Habanéruption']}
+  }}]},
 {id:'rellor',abilities:['Œil Composé','Mue'],moveIds:['tackle','confusion','psychic','expandingforce','protect','endure','hyperbeam','facade','sleeptalk','rest','calmmind','raindance','sunnyday','lightscreen','shadowball','takedown','zenheadbutt','reflect','thief','psychup','skillswap','psybeam','rocktomb','trick','futuresight','safeguard','dig','sandattack','defensecurl','rollout','mudshot','bugbite','lunge','extrasensory','speedswap','recover','memento','weatherball','cosmicpower','substitute','fling','xscissor','bugbuzz','gunkshot','strugglebug','terablast','pounce','gravity','powerswap','guardswap','powergem','energyball','earthpower','gigaimpact','trickroom','psyshock','electroball','storedpower','revivalblessing','confuseray','dazzlinggleam','imprison','irondefense','leechlife','mudslap','poltergeist','psychicnoise','psychicterrain','sandstorm','skittersmack','sludgebomb'],
  stages:[
   {name:'Léboulérou',types:['insecte'],base:st(41,25,30,40,30,14)},
@@ -134,7 +136,9 @@ const LINES_GEN9 = [
 {id:'glimmet',abilities:['Débris Toxique','Corrosion'],moveIds:['toxicspikes','sludgebomb','rockslide','stoneedge','protect','endure','hyperbeam','facade','sleeptalk','rest','sunnyday','raindance','rocktomb','sandstorm','stealthrock','irondefense','mudshot','toxic','solarbeam','rockthrow','harden','selfdestruct','acidarmor','ancientpower','spikyshield','mortalspin','explosion','memento','substitute','rockpolish','powergem','gunkshot','venoshock','smackdown','sludgewave','acidspray','terablast','energyball','earthpower','gigaimpact','confuseray','dazzlinggleam','flashcannon','lightscreen','meteorbeam','reflect','rockblast','sandtomb','spikes'],
  stages:[
   {name:'Germéclat',types:['roche','poison'],base:st(48,35,42,105,58,60)},
-  {name:'Floréclat',types:['roche','poison'],base:st(83,55,90,130,81,86)}]},
+  {name:'Floréclat',types:['roche','poison'],base:st(83,55,90,130,81,86),forms:{
+    glimmoranite:{name:'Méga-Floréclat',types:['roche','poison'],base:st(83,90,105,150,96,101),abilities:['Adaptabilité']}
+  }}]},
 {id:'greavard',abilities:['Ramassage','Pelage Moelleux'],moveIds:['tackle','bite','shadowball','poltergeist','crunch','protect','endure','hyperbeam','facade','doubleedge','sleeptalk','rest','raindance','sunnyday','takedown','thief','scaryface','zenheadbutt','dig','bulldoze','trick','confuseray','headbutt','tailwhip','growl','lick','charm','phantomforce','playrough','lastrespects','firefang','icefang','thunderfang','disable','destinybond','memento','yawn','howl','roar','substitute','helpinghand','allyswitch','hex','snarl','terablast','gigaimpact','shadowsneak','bodypress','endeavor','mudshot','mudslap','nightshade','painsplit','psychicfangs','sandstorm','stompingtantrum','swagger','uproar','willowisp'],
  stages:[
   {name:'Toutombe',types:['fantome'],base:st(50,61,60,30,55,55)},
@@ -154,12 +158,16 @@ const LINES_GEN9 = [
   {name:'Oyacata',types:['eau'],base:st(150,100,115,65,65,35)}]},
 {id:'tatsugiri',abilities:['Commandant','Lavabo'],moveIds:['watergun','dragonpulse','dracometeor','hydropump','protect','endure','hyperbeam','surf','facade','sleeptalk','rest','raindance','takedown','waterpulse','icywind','whirlpool','muddywater','outrage','harden','splash','mirrorcoat','memento','taunt','counter','batonpass','rapidspin','substitute','helpinghand','gigaimpact','nastyplot','soak','terablast','chillingwater','dragoncheer','dragondance','lunge'],
  stages:[
-  {name:'Nigirigon',types:['dragon','eau'],base:st(68,50,60,120,95,82)}]},
+  {name:'Nigirigon',types:['dragon','eau'],base:st(68,50,60,120,95,82),forms:{
+    tatsugirinite:{name:'Méga-Nigirigon',types:['dragon','eau'],base:st(68,65,90,135,125,92)}
+  }}]},
 {id:'frigibax',abilities:['Échange Thermique','Corps Gel'],moveIds:['tackle','dragonclaw','icefang','dracometeor','icebeam','protect','endure','hyperbeam','facade','sleeptalk','rest','blizzard','dragondance','raindance','bodyslam','takedown','scaryface','bulldoze','earthquake','doubleedge','icywind','brickbreak','outrage','aerialace','dig','dragonpulse','zenheadbutt','ironhead','leer','bite','focusenergy','dragonbreath','crunch','breakingswipe','glaiverush','thunderfang','iciclespear','aquatail','freezedry','substitute','helpinghand','dragonrush','avalanche','dragontail','iciclecrash','terablast','snowscape','gigaimpact','iceshard','dragoncheer','bodypress','falseswipe','highhorsepower','scaleshot','stompingtantrum','swordsdance'],
  stages:[
   {name:'Frigodo',types:['dragon','glace'],base:st(65,75,45,35,45,55)},
   {name:'Cryodo',types:['dragon','glace'],base:st(90,95,66,45,65,62)},
-  {name:'Glaivodo',types:['dragon','glace'],base:st(115,145,92,75,86,87)}]},
+  {name:'Glaivodo',types:['dragon','glace'],base:st(115,145,92,75,86,87),forms:{
+    baxcalibrite:{name:'Méga-Glaivodo',types:['dragon','glace'],base:st(115,175,117,105,101,87),abilities:['Échange Thermique']}
+  }}]},
 {id:'gimmighoul',abilities:['Phobique'],moveIds:['tackle','shadowball','poltergeist','makeitrain','flashcannon','protect','endure','hyperbeam','sleeptalk','rest','takedown','thief','thunderwave','ironhead','psychic','focusblast','thunderbolt','sandstorm','thunder','astonish','nightshade','recover','confuseray','memento','thunderpunch','substitute','powergem','nastyplot','hex','terablast','fling','gigaimpact','chargebeam','psyshock','heavyslam','electroball','lowsweep','dazzlinggleam','focuspunch','lightscreen','lowkick','reflect','shadowpunch','steelbeam','surf','trick','stridoson'],
  stages:[
   {name:'Mordudor',types:['fantome'],base:st(45,30,25,40,30,10)},

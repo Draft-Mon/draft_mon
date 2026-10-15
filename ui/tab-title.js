@@ -19,7 +19,7 @@ const TAB_TITLES = {
 function updateTabTitle(){
   const panel = [...document.querySelectorAll('.panel')].find(p=> !p.classList.contains('hidden'));
   const detail = panel && TAB_TITLES[panel.id] ? TAB_TITLES[panel.id]() : '';
-  const title = detail ? `${detail} · ${TAB_TITLE_BASE}` : TAB_TITLE_BASE;
+  const title = detail ? `${I18N.t(detail)} · ${TAB_TITLE_BASE}` : TAB_TITLE_BASE;
   if(document.title !== title) document.title = title;
 }
 

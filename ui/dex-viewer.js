@@ -75,11 +75,11 @@ function renderDex(){
       // leur propre rareté "Méga"/"Gigamax", jamais proposées au draft (ce ne sont pas des lignées).
       const isFinalForm = isBranch || stageIdx===line.stages.length-1;
       const variants = [{kind:'base', sp:baseSp}];
-      Object.keys(baseSp.forms||{}).filter(k=>ITEMS[k] && ITEMS[k].megaStone).forEach(k=> variants.push({kind:'mega', formKey:k, sp:baseSp.forms[k]}));
+      Object.keys(baseSp.forms||{}).filter(k=>(ITEMS[k] && ITEMS[k].megaStone) || k==='dragonascent').forEach(k=> variants.push({kind:'mega', formKey:k, sp:baseSp.forms[k]}));
       const gmaxId = (isFinalForm && typeof GIGAMAX_LINES!=='undefined' && GIGAMAX_LINES[line.id]) ? GIGAMAX_SPRITE_IDS[baseSp.name] : null;
       if(gmaxId) variants.push({kind:'gigamax', formKey:'gigamax', spriteId:gmaxId, sp:{name:`${baseSp.name} Gigamax`, types:baseSp.types, base:baseSp.base}});
       variants.forEach(({kind, formKey, spriteId, sp})=>{
-      if(dexFilters.search && !sp.name.toLowerCase().includes(dexFilters.search.toLowerCase())) return;
+      if(dexFilters.search && !(sp.name+' '+I18N.name(sp.name)).toLowerCase().includes(dexFilters.search.toLowerCase())) return;
       if(dexFilters.type && !sp.types.includes(dexFilters.type)) return;
       if(dexFilters.type2 && !sp.types.includes(dexFilters.type2)) return;
       // Une branche non-draftable (ex. Éthernatos Infinimax) n'est jamais une rareté en soi : elle
@@ -97,7 +97,9 @@ function renderDex(){
         : isUndraftableBranch ? {label:'Injouable', css:'rarity-injouable'} : rarityInfo(line);
       let rateText;
       if(kind==='mega'){
-        rateText = `Non draftable — Méga-Évolution de ${baseSp.name} en combat (objet tenu : ${ITEMS[formKey].name})`;
+        rateText = formKey==='dragonascent'
+          ? `Non draftable — Méga-Évolution de ${baseSp.name} en combat (s'il connaît ${MOVES.dragonascent.name})`
+          : `Non draftable — Méga-Évolution de ${baseSp.name} en combat (objet tenu : ${ITEMS[formKey].name})`;
       } else if(kind==='gigamax'){
         rateText = `Non draftable — forme Gigamax de ${baseSp.name} en combat (objet tenu : ${ITEMS.facteurGigamax.name})`;
       } else if(isUndraftableBranch){

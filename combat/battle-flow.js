@@ -196,7 +196,8 @@ function startBattle(){
     // Forme Méga-Évolution disponible ce combat, si le porteur tient la bonne Méga-Gemme : precalculée ici
     // (nom/types/talent/stats), déclenchée en combat via activateMegaEvolve (voir combat/megaevolution.js).
     // L'affichage hors combat reste sous la forme normale (speciesOf ignore les Méga-Gemmes, voir helpers.js).
-    const megaForm = sp.forms && m.heldItem && sp.forms[m.heldItem];
+    const megaKey = megaFormKey(m, sp);
+    const megaForm = megaKey ? sp.forms[megaKey] : null;
     const megaFormData = megaForm ? { name: megaForm.name, types: megaForm.types, abilities: megaForm.abilities } : null;
     const megaStats = megaForm ? calcStats(megaForm.base, m.ivs, m.evs, m.nature) : null;
     return {
@@ -1615,6 +1616,12 @@ function runStep(actor, move, defender, actorIsPlayer, callback){
         msg += ` ${logs.pop()}`;
       }
     }
+  }
+  // Habanéruption (Méga-Scovilain) : toute capacité offensive qui le touche brûle l'attaquant, contact ou non.
+  if(defender.ability==='Habanéruption' && actor.hp>0 && !actor.status){
+    const before = logs.length;
+    inflictStatus(actor, 'brulure', logs);
+    if(logs.length>before) msg += ` ${logs.pop()}`;
   }
   if(crit && defender.hp>0){
     if(defender.ability==='Colérique'){

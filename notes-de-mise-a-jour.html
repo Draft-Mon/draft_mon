@@ -24,6 +24,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
 </head>
 <body>
 <div class="app">
@@ -44,6 +65,17 @@
     <p class="doc-lead">L'historique complet des versions du jeu, de la plus récente à la plus ancienne. Version actuelle : v0.12.</p>
 
     <h2 id="v0.12">v0.12 — Team Builder Update</h2>
+    <h3 id="v0.12.1">v0.12.1 — Méga-Évolutions manquantes</h3>
+    <h4><i class="ph-bold ph-diamond"></i> Méga-Évolutions</h4>
+    <ul>
+      <li>8 Méga-Évolutions des jeux principaux qui manquaient sont ajoutées : Méga-Mewtwo X, Méga-Jungko, Méga-Braségali, Méga-Laggron, Méga-Latias, Méga-Latios, Méga-Diancie et Méga-Rayquaza</li>
+      <li>Méga-Rayquaza n'a pas de Méga-Gemme : comme dans les vrais jeux, il se Méga-Évolue en combat s'il connaît Draco-Ascension</li>
+      <li>16 nouvelles Méga-Évolutions de l'extension Méga-Dimension de Pokémon Légendes Z-A : Méga-Raichu X et Y, Méga-Éoko, Méga-Étouraptor, Méga-Heatran, Méga-Darkrai, Méga-Golemastoc, Méga-Mistigrix, Méga-Crabominable, Méga-Sarmuraï, Méga-Magearna, Méga-Zeraora, Méga-Scovilain, Méga-Floréclat, Méga-Nigirigon et Méga-Glaivodo</li>
+      <li>Leurs Méga-Gemmes sont vendues par le Marchand Itinérant (onglets « Méga Gemme » et « Méga Z-A »)</li>
+      <li>Nouveau talent Habanéruption (Méga-Scovilain) : brûle l'attaquant à chaque capacité offensive subie, même sans contact</li>
+      <li>Souffle Delta (Méga-Rayquaza) a sa description dans le Pokédex mais reste sans effet codé pour l'instant</li>
+      <li>Méga-Heatran, Méga-Darkrai, Méga-Magearna, Méga-Zeraora et Méga-Nigirigon gardent le talent de leur forme normale, faute de talent officiel connu pour l'instant</li>
+    </ul>
     <h4><i class="ph-bold ph-wrench"></i> Builder d’équipe</h4>
     <ul>
       <li>Nouveau bouton « Builder d'équipe » sur l'accueil : un outil à part, totalement indépendant des parties de draft et de la Tour</li>
@@ -77,7 +109,7 @@
       <li>Bouton « Vendre » au Pokéshop et chez le Marchand Itinérant : les objets se revendent à 60% de leur prix</li>
       <li>Nouvel onglet « Vendre » au Pokéshop, qui liste tout le contenu du sac</li>
     </ul>
-    <h4><i class="ph-bold ph-sword"></i> Combat</h4>
+    <h4><i class="ph-bold ph-sword"></i> Combats</h4>
     <ul>
       <li>Changer de Pokémon est une action complète pour tout le monde : quand l'adversaire rappelle son Pokémon, le remplaçant n'attaque plus dans le même tour</li>
     </ul>
@@ -139,7 +171,7 @@
       <li>Ciblage des attaques et indicateur d'efficacité corrigés en combat double (2v2)</li>
       <li>L'événement Chemin Instable fait vraiment grimper ou chuter d'étage selon l'issue</li>
     </ul>
-    <h4><i class="ph-bold ph-repeat"></i> Combat</h4>
+    <h4><i class="ph-bold ph-repeat"></i> Combats</h4>
     <ul>
       <li>Possibilité de choisir le Pokémon qui entre après une capacité à self-switch (Demi-Tour, Change Éclair, Relais...)</li>
     </ul>
@@ -416,7 +448,7 @@
     <ul>
       <li>12 Méga-Évolutions ajoutées via de nouveaux objets tenus exclusifs (Florizarre, Dracaufeu X et Y, Tortank, Kangourex, Léviator, Mewtwo Y, Cizayox, Gardevoir, Carchacrok, Lucario, Métalosse), disponibles chez le Marchand Itinérant</li>
     </ul>
-    <h4><i class="ph-bold ph-film-reel"></i> Combat</h4>
+    <h4><i class="ph-bold ph-film-reel"></i> Combats</h4>
     <ul>
       <li>Le sprite du Pokémon du joueur est désormais plus grand que celui de l'adversaire, pour renforcer l'impression d'être derrière son propre Pokémon</li>
       <li>Les Pokémon affichent maintenant une taille de sprite variable selon leur gabarit réel (les plus imposants comme Onix ou Wailord paraissent nettement plus grands que les plus petits comme Statitik ou Flabébé)</li>
@@ -474,7 +506,7 @@
     <ul>
       <li>Nouveau PNJ au Village : 20% de chance d'apparaître à chaque visite, il vend exclusivement les objets de forme</li>
     </ul>
-    <h4><i class="ph-bold ph-film-reel"></i> Combat</h4>
+    <h4><i class="ph-bold ph-film-reel"></i> Combats</h4>
     <ul>
       <li>Les Pokémon en combat affichent désormais leur sprite animé (style Noir & Blanc) au lieu du sprite statique, avec repli automatique vers le sprite statique si l'animation n'est pas disponible</li>
     </ul>

@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://draft-mon.github.io/draft_mon/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://draft-mon.github.io/draft_mon/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://draft-mon.github.io/draft_mon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://draft-mon.github.io/draft_mon/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://draft-mon.github.io/draft_mon/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://draft-mon.github.io/draft_mon/"/>
+  </url>
+  <url>
+    <loc>https://draft-mon.github.io/draft_mon/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://draft-mon.github.io/draft_mon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://draft-mon.github.io/draft_mon/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://draft-mon.github.io/draft_mon/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://draft-mon.github.io/draft_mon/"/>
+  </url>
+  <url>
+    <loc>https://draft-mon.github.io/draft_mon/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://draft-mon.github.io/draft_mon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://draft-mon.github.io/draft_mon/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://draft-mon.github.io/draft_mon/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://draft-mon.github.io/draft_mon/"/>
+  </url>
 </urlset>

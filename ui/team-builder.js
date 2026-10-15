@@ -68,9 +68,8 @@ function tbEntryOf(m){ return tbEntryByKey(tbEntryKey(m)); }
 // au reste du jeu hors combat, Méga-Évolution comprise — le Builder calcule toujours "Méga activée".
 function tbForm(m){
   const base = speciesOf(m);
-  const item = m.heldItem && ITEMS[m.heldItem];
-  if(item && item.megaStone && base.forms && base.forms[m.heldItem]) return base.forms[m.heldItem];
-  return base;
+  const megaKey = megaFormKey(m, base);
+  return megaKey ? base.forms[megaKey] : base;
 }
 // Talents sélectionnables d'un membre : ceux de sa forme hors Méga-Évolution (le talent d'une Méga
 // est imposé et remplace celui-ci une fois en combat, voir tbCombatant).
@@ -327,7 +326,7 @@ function tbRender(){
     onChange: (val)=>{ tbData.cur = val; tbSel = 0; tbSave(); tbRender(); }
   }));
   document.getElementById('tbRenameBtn').onclick = ()=>{
-    const name = window.prompt("Nom de l'équipe :", team.name);
+    const name = window.prompt(I18N.t("Nom de l'équipe :"), team.name);
     if(name===null) return;
     team.name = name.trim().slice(0,30) || team.name;
     tbSave(); tbRender();
@@ -335,7 +334,7 @@ function tbRender(){
   document.getElementById('tbSummaryBtn').onclick = tbOpenSummary;
   document.getElementById('tbIOBtn').onclick = tbOpenImportExport;
   document.getElementById('tbClearBtn').onclick = ()=>{
-    if(!window.confirm(`Vider « ${team.name} » ?`)) return;
+    if(!window.confirm(I18N.t(`Vider « ${team.name} » ?`))) return;
     team.members = []; tbSel = 0; tbSave(); tbRender();
   };
   const slots = document.getElementById('tbSlots');
@@ -583,7 +582,7 @@ function tbOpenSpeciesPicker(onPick){
   const input = document.getElementById('tbPickSearch');
   const draw = ()=>{
     const q = tbNorm(input.value);
-    const all = tbSpeciesList().filter(e=> !q || tbNorm(e.sp.name).includes(q) || e.sp.types.some(t=>tbNorm(typeDisplayName(t)).startsWith(q)));
+    const all = tbSpeciesList().filter(e=> !q || tbNorm(e.sp.name).includes(q) || tbNorm(I18N.name(e.sp.name)).includes(q) || e.sp.types.some(t=>tbNorm(typeDisplayName(t)).startsWith(q) || tbNorm(I18N.name(typeDisplayName(t))).startsWith(q)));
     listEl.innerHTML = '';
     all.slice(0,60).forEach(e=>{
       const btn = document.createElement('button');

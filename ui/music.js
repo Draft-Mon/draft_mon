@@ -204,13 +204,15 @@ function openMusicSettingsModal(){
         <input type="range" id="musicVolumeSlider" min="0" max="100" value="${Math.round(musicVolume*100)}" style="flex:1;">
         <span style="font-size:14px;">${phIcon('speaker-high')}</span>
       </div>
-      <div style="font-size:10px;color:var(--text-dim);margin:16px 0 8px;">Combat</div>
+      <div style="font-size:10px;color:var(--text-dim);margin:16px 0 8px;">Combats</div>
       <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-main);cursor:pointer;margin-bottom:12px;">
         <input type="checkbox" id="effectivenessToggle" ${showMoveEffectiveness?'checked':''}>
         Afficher l'efficacité des attaques (super efficace/peu efficace/aucun effet)
       </label>
       <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px;">Vitesse du jeu</div>
       <div id="gameSpeedTabs" style="display:flex;gap:6px;"></div>
+      <div style="font-size:10px;color:var(--text-dim);margin:16px 0 8px;">Langue</div>
+      <div id="langTabs" style="display:flex;gap:6px;" data-no-i18n></div>
     </div>`;
   document.body.appendChild(overlay);
   const close = ()=> overlay.remove();
@@ -230,6 +232,16 @@ function openMusicSettingsModal(){
       btn.classList.add('diff-active');
     };
     speedTabs.appendChild(btn);
+  });
+  // Langue de l'interface (voir core/i18n.js) : chaque langue a sa propre page.
+  const langTabs = document.getElementById('langTabs');
+  [['fr','Français'],['en','English'],['es','Español']].forEach(([code,label])=>{
+    const btn = document.createElement('button');
+    btn.className = 'btn secondary' + (I18N.lang===code ? ' diff-active' : '');
+    btn.style.cssText = 'padding:6px 10px;font-size:10px;flex:1;';
+    btn.textContent = label;
+    btn.onclick = ()=> I18N.setLang(code);
+    langTabs.appendChild(btn);
   });
 }
 window.addEventListener('pointerdown', unlockMusic, { once:true, capture:true });

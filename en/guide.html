@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!-- Traduction de guide.html : à mettre à jour à la main si la page française change. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<base href="../">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Draft Mon guide, the Pokémon roguelike: draft, Battle Tower and Camp</title>
+<meta name="description" content="Complete Draft Mon guide: drafting 6 Pokémon, the three difficulty levels, the Battle Tower, Type Masters, the Camp, Tower Tokens and Affinity.">
+<link rel="canonical" href="https://draft-mon.github.io/draft_mon/en/guide.html">
+<meta name="theme-color" content="#120F0C">
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Draft Mon">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Draft Mon guide, the Pokémon roguelike: draft, Battle Tower and Camp">
+<meta property="og:description" content="Complete Draft Mon guide: drafting 6 Pokémon, the three difficulty levels, the Battle Tower, Type Masters, the Camp, Tower Tokens and Affinity.">
+<meta property="og:url" content="https://draft-mon.github.io/draft_mon/en/guide.html">
+<meta property="og:image" content="https://draft-mon.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/image/logo/favicon-64.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/image/logo/icon-192.png">
+<link rel="apple-touch-icon" href="assets/image/logo/apple-touch-icon.png">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
+</head>
+<body>
+<div class="app">
+  <div class="site-header">
+    <div class="header-actions">
+      <a class="header-icon-btn discord-btn" href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer" title="Join the Discord" aria-label="Join the Discord">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6605a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      </a>
+    </div>
+    <span class="site-logo">DRAFT MON</span>
+    <span class="site-subtitle">◆ BATTLE TOWER ◆</span>
+  </div>
+
+    <div class="doc-page">
+    <a class="btn secondary doc-back" href="en/" style="width:auto;padding:8px 14px;font-size:11px;"><i class="ph-bold ph-arrow-left"></i> Back to the game</a>
+
+    <h1>Draft Mon guide: how to climb the Battle Tower</h1>
+    <p class="doc-lead">Draft Mon is a free Pokémon roguelike you play in your browser. You draft a team of 6 Pokémon, prepare it, then battle your way up an endless Tower. This guide explains every step of a run.</p>
+
+    <h2><i class="ph-bold ph-cards"></i> The draft: building your team</h2>
+    <p>Every run starts with a six-round draft. Each round, the game offers you three Pokémon cards and you keep only one. After six picks, your team is complete.</p>
+    <ul>
+      <li>Each evolutionary line has a rarity (Common, Uncommon, Rare, Pseudo-legendary, Legendary, Mythical) that sets its chance of appearing.</li>
+      <li>Every Pokémon offered has a 0.2% chance of being shiny. If you pick it, it stays shiny for the whole run.</li>
+      <li>The “Assisted Draft” Boost gives you one free reroll of the three cards, once per run.</li>
+    </ul>
+
+    <h2><i class="ph-bold ph-gauge"></i> The three difficulty levels</h2>
+    <table>
+      <tr><th>Mode</th><th>Draft</th><th>Between battles</th></tr>
+      <tr><td>Easy</td><td>Only fully evolved forms, with a ready-to-use build</td><td>HP restored after each battle</td></tr>
+      <tr><td>Normal</td><td>Every evolution stage, build to set up yourself</td><td>HP restored after each battle</td></tr>
+      <tr><td>Hard</td><td>Every evolution stage, build to set up yourself</td><td>HP and status conditions carry over between battles</td></tr>
+    </table>
+    <p>Your best floor and the Badges you earn are recorded separately for each difficulty.</p>
+
+    <h2><i class="ph-bold ph-wrench"></i> Preparing your team</h2>
+    <p>In Normal and Hard, you set up each Pokémon before entering the Tower: nature, ability, held item, EV spread, Tera Type and four moves. EVs are spread on a base of 32 points per stat, with a cap of 66 points in total.</p>
+    <p>The <strong>Team Builder</strong>, available from the home screen, is a separate tool: it lets you prepare up to 10 teams, compare damage between two Pokémon with the game's real battle engine, and import or export in Pokémon Showdown format.</p>
+
+    <h2><i class="ph-bold ph-stairs"></i> The Battle Tower</h2>
+    <p>You climb the Tower floor by floor, and the difficulty keeps rising with no cap. Each floor is a battle against a trainer.</p>
+    <ul>
+      <li><strong>Every 5 floors</strong>, you face a Mini-Boss.</li>
+      <li><strong>Every 10 floors</strong>, you face a Type Master. Beating them earns their Badge. The 17 types come up without repeats.</li>
+      <li><strong>Double battles</strong>: a normal floor has about a 12% chance of being a two-on-two battle against twins.</li>
+      <li><strong>Events</strong>: between two normal floors, a random event can occur (25% chance). Some are risk-free, others are gambles with a reward or a penalty.</li>
+    </ul>
+    <p>Trainers get smarter as you climb: from floor 5 they estimate the real damage of each move, from floor 6 their Pokémon hold items, and from floor 12 they use status moves at the right time and can switch out a Pokémon in trouble.</p>
+
+    <h2><i class="ph-bold ph-sword"></i> Battle mechanics</h2>
+    <p>Battles follow the rules of the main series games: types, abilities, held items, weather, terrains, entry hazards and status conditions. Four special mechanics are available, each tied to a held item:</p>
+    <ul>
+      <li><strong>Mega Evolution</strong>: the Pokémon must hold its Mega Stone. It is triggered with a button during battle and lasts until the end of the battle.</li>
+      <li><strong>Z-Moves</strong>: the Pokémon must hold a Z-Crystal and know an attacking move of the matching type.</li>
+      <li><strong>Dynamax and Gigantamax</strong>: once per battle, for 3 turns, with 50% more HP. The Gigantamax Factor item unlocks G-Max Moves for eligible lines.</li>
+      <li><strong>Terastallization</strong>: with the Tera Orb, once per battle. The Pokémon takes on its Tera Type until the end of the battle.</li>
+    </ul>
+
+    <h2><i class="ph-bold ph-tent"></i> The Camp</h2>
+    <p>After each win against a Mini-Boss or a Type Master, you stop at the Camp before resuming your climb.</p>
+    <ul>
+      <li><strong>Pokémon Center</strong>: free healing for the whole team and access to the PC, a 6-slot box to store Pokémon.</li>
+      <li><strong>Poké Mart</strong>: buy items with the money earned in battle. Items sell back for 60% of their price.</li>
+      <li><strong>Ranch</strong>: three wild Pokémon are on offer and you can recruit one per visit. The Move Master there rebuilds a Pokémon's set for 100 coins.</li>
+      <li><strong>Traveling Merchant</strong>: a random visitor selling rare items, including Mega Stones and the Tera Orb.</li>
+      <li><strong>Safari House</strong>: a random visitor. You get 10 Safari Balls to catch wild Pokémon, which the Professor trades for Affinity Candies.</li>
+    </ul>
+
+    <h2><i class="ph-bold ph-ticket"></i> Progress between runs</h2>
+    <p>A defeat ends the run, but two currencies are kept forever.</p>
+    <h3>Tower Tokens and Starting Boosts</h3>
+    <p>Every defeat earns Tower Tokens based on the number of floors cleared: one token per 8 floors in Easy, per 4 floors in Normal and per 2 floors in Hard (rounded up). They are traded for permanent Starting Boosts:</p>
+    <ul>
+      <li>extra money at the start of each run (three tiers);</li>
+      <li>a starting item: Potion, Full Heal or Sitrus Berry;</li>
+      <li>a 10% then 20% discount at the Poké Mart;</li>
+      <li>a free reroll in the draft.</li>
+    </ul>
+    <h3>Affinity Candies</h3>
+    <p>Affinity Candies are earned by beating trainers and at the Safari House. Given to the Professor, they raise a line's Affinity level from 0 to 5. The higher the level, the more often that line appears in the draft and at the Ranch, up to twice as often at the maximum level. The bonus applies to the whole line, evolution branches included.</p>
+
+    <h2><i class="ph-bold ph-floppy-disk"></i> Saving</h2>
+    <p>The game has 5 save slots. Everything is stored in your browser, with no account or server: see the <a href="confidentialite.html">Privacy page</a> (in French) for details.</p>
+    <p style="margin-top:28px;"><a class="btn" href="en/" style="display:inline-flex;width:auto;text-decoration:none;">▶ Play Draft Mon</a></p>
+
+    <nav class="doc-footer" aria-label="Site pages">
+      <a href="en/">Play</a>
+      <a href="en/guide.html" aria-current="page">Guide</a>
+      <a href="en/faq.html">FAQ</a>
+      <a href="en/notes-de-mise-a-jour.html">Patch notes</a>
+      <a href="confidentialite.html">Privacy (French)</a>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

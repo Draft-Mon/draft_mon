@@ -395,7 +395,7 @@ function renderProfessorList(){
   if(!list) return;
   const q = professorFilter.search.trim().toLowerCase();
   const filtered = LINES.filter(line=>{
-    if(q && !professorLineLabel(line).toLowerCase().includes(q)) return false;
+    if(q && !(professorLineLabel(line)+' '+line.stages.map(s=>I18N.name(s.name)).join(' ')).toLowerCase().includes(q)) return false;
     if(professorFilter.rarity && professorRarityKey(line.id)!==professorFilter.rarity) return false;
     return true;
   });

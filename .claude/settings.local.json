@@ -45,7 +45,9 @@
       "WebFetch(domain:pokepc.net)",
       "Bash(mkdir -p /c/Users/zolex/AppData/Local/Temp/claude/C--Users-zolex-draft-mon/c9533631-8b3b-4346-92bb-90e3cf5cabdf/scratchpad)",
       "WebFetch(domain:pokebip.com)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "WebFetch(domain:www.dittobase.com)",
+      "Bash(python3 -)"
     ]
   }
 }

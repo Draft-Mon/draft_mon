@@ -359,5 +359,8 @@ const ABILITY_DESC = {
   'Égide Inflexible':"Augmente la Défense du Pokémon la première fois qu’il entre au combat.",
   'Odeur Tenace':"Lorsque le Pokémon subit une attaque directe, le talent de l’attaquant est remplacé par Odeur Tenace.",
   'Peau Électrique':"Les capacités de type Normal deviennent de type Électrik. Leur puissance augmente légèrement.",
-  'Osmose':"Le Pokémon acquiert le talent d’un allié mis K.O."
+  'Osmose':"Le Pokémon acquiert le talent d’un allié mis K.O.",
+  /* ---- BLOC : talents de Méga-Évolution ajoutés en v0.12.1 ---- */
+  'Souffle Delta':"Déclenche des vents mystérieux qui protègent les Pokémon Vol de leurs faiblesses tant que le porteur reste sur le terrain.",
+  'Habanéruption':"Brûle l'attaquant chaque fois que le porteur subit une capacité offensive, même sans contact."
 };

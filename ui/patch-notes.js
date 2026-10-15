@@ -10,6 +10,26 @@ const PATCH_NOTES = [
   {
     version: 'v0.12',
     title: 'v0.12 — Team Builder Update',
+    subVersions: [
+      {
+        version: 'v0.12.1',
+        title: 'v0.12.1 — Méga-Évolutions manquantes',
+        categories: [
+          {
+            icon: phIcon('diamond'), label: 'Méga-Évolutions',
+            items: [
+              "8 Méga-Évolutions des jeux principaux qui manquaient sont ajoutées : Méga-Mewtwo X, Méga-Jungko, Méga-Braségali, Méga-Laggron, Méga-Latias, Méga-Latios, Méga-Diancie et Méga-Rayquaza",
+              "Méga-Rayquaza n'a pas de Méga-Gemme : comme dans les vrais jeux, il se Méga-Évolue en combat s'il connaît Draco-Ascension",
+              "16 nouvelles Méga-Évolutions de l'extension Méga-Dimension de Pokémon Légendes Z-A : Méga-Raichu X et Y, Méga-Éoko, Méga-Étouraptor, Méga-Heatran, Méga-Darkrai, Méga-Golemastoc, Méga-Mistigrix, Méga-Crabominable, Méga-Sarmuraï, Méga-Magearna, Méga-Zeraora, Méga-Scovilain, Méga-Floréclat, Méga-Nigirigon et Méga-Glaivodo",
+              "Leurs Méga-Gemmes sont vendues par le Marchand Itinérant (onglets « Méga Gemme » et « Méga Z-A »)",
+              "Nouveau talent Habanéruption (Méga-Scovilain) : brûle l'attaquant à chaque capacité offensive subie, même sans contact",
+              "Souffle Delta (Méga-Rayquaza) a sa description dans le Pokédex mais reste sans effet codé pour l'instant",
+              "Méga-Heatran, Méga-Darkrai, Méga-Magearna, Méga-Zeraora et Méga-Nigirigon gardent le talent de leur forme normale, faute de talent officiel connu pour l'instant"
+            ]
+          }
+        ]
+      }
+    ],
     categories: [
       {
         icon: phIcon('wrench'), label: 'Builder d’équipe',
@@ -55,7 +75,7 @@ const PATCH_NOTES = [
         ]
       },
       {
-        icon: phIcon('sword'), label: 'Combat',
+        icon: phIcon('sword'), label: 'Combats',
         items: [
           "Changer de Pokémon est une action complète pour tout le monde : quand l'adversaire rappelle son Pokémon, le remplaçant n'attaque plus dans le même tour"
         ]
@@ -146,7 +166,7 @@ const PATCH_NOTES = [
             ]
           },
           {
-            icon: phIcon('repeat'), label: 'Combat',
+            icon: phIcon('repeat'), label: 'Combats',
             items: [
               "Possibilité de choisir le Pokémon qui entre après une capacité à self-switch (Demi-Tour, Change Éclair, Relais...)"
             ]
@@ -552,7 +572,7 @@ const PATCH_NOTES = [
         ]
       },
       {
-        icon: phIcon('film-reel'), label: 'Combat',
+        icon: phIcon('film-reel'), label: 'Combats',
         items: [
           "Le sprite du Pokémon du joueur est désormais plus grand que celui de l'adversaire, pour renforcer l'impression d'être derrière son propre Pokémon",
           "Les Pokémon affichent maintenant une taille de sprite variable selon leur gabarit réel (les plus imposants comme Onix ou Wailord paraissent nettement plus grands que les plus petits comme Statitik ou Flabébé)"
@@ -638,7 +658,7 @@ const PATCH_NOTES = [
             ]
           },
           {
-            icon: phIcon('film-reel'), label: 'Combat',
+            icon: phIcon('film-reel'), label: 'Combats',
             items: [
               "Les Pokémon en combat affichent désormais leur sprite animé (style Noir & Blanc) au lieu du sprite statique, avec repli automatique vers le sprite statique si l'animation n'est pas disponible"
             ]

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<!-- Fichier généré par outils/generer-pages-langues.py à partir de index.html : ne pas modifier à la main. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<base href="../">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Draft Mon — Free Pokémon roguelike browser game</title>
+<meta name="description" content="Draft Mon is a free Pokémon browser game: draft 6 Pokémon, prepare your team and climb the Battle Tower floor by floor, facing Mini-Bosses and Type Masters.">
+<link rel="canonical" href="https://draft-mon.github.io/draft_mon/en/">
+<link rel="alternate" hreflang="fr" href="https://draft-mon.github.io/draft_mon/">
+<link rel="alternate" hreflang="en" href="https://draft-mon.github.io/draft_mon/en/">
+<link rel="alternate" hreflang="es" href="https://draft-mon.github.io/draft_mon/es/">
+<link rel="alternate" hreflang="x-default" href="https://draft-mon.github.io/draft_mon/">
+<meta name="theme-color" content="#120F0C">
+<meta name="google-site-verification" content="8roy83PJgHsvhclD12PbWZSXPzMrOBeTeF2h97uwIxI">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Draft Mon">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Draft Mon — Free Pokémon roguelike browser game">
+<meta property="og:description" content="Draft Mon is a free Pokémon browser game: draft 6 Pokémon, prepare your team and climb the Battle Tower floor by floor, facing Mini-Bosses and Type Masters.">
+<meta property="og:url" content="https://draft-mon.github.io/draft_mon/en/">
+<meta property="og:image" content="https://draft-mon.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Draft Mon — Battle Tower">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Draft Mon — Free Pokémon roguelike browser game">
+<meta name="twitter:description" content="Draft Mon is a free Pokémon browser game: draft 6 Pokémon, prepare your team and climb the Battle Tower floor by floor, facing Mini-Bosses and Type Masters.">
+<meta name="twitter:image" content="https://draft-mon.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Draft Mon",
+  "alternateName": "Draft Mon — Battle Tower",
+  "url": "https://draft-mon.github.io/draft_mon/en/",
+  "image": "https://draft-mon.github.io/draft_mon/assets/image/logo/Draft_mon_og.jpg",
+  "description": "Draft Mon is a free Pokémon browser game: draft 6 Pokémon, prepare your team and climb the Battle Tower floor by floor, facing Mini-Bosses and Type Masters.",
+  "inLanguage": "en",
+  "genre": ["Strategy", "Roguelike"],
+  "gamePlatform": "Web browser",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any",
+  "playMode": "SinglePlayer",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/image/logo/favicon-64.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/image/logo/icon-192.png">
+<link rel="apple-touch-icon" href="assets/image/logo/apple-touch-icon.png">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Titre court dans l'onglet dès l'ouverture (ui/tab-title.js le met ensuite à jour selon l'écran).
+  document.title = 'Draft Mon';
+</script>
+<script>
+  // Migration depuis l'ancienne adresse (zolexdbb.github.io/draft_mon/) : la page de redirection laissée
+  // là-bas transmet les sauvegardes du joueur dans le fragment #migration=... (jamais envoyé au serveur).
+  // On ne les importe que si ce navigateur n'a encore aucune donnée Draft Mon ici, pour ne rien écraser,
+  // puis on retire le fragment de l'adresse. S'exécute avant les scripts du jeu (chargés en defer).
+  (function(){
+    var m = location.hash.match(/^#migration=(.+)$/);
+    if(!m) return;
+    try {
+      var hasData = false;
+      for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k.indexOf('draftArena')===0 && k!=='draftArenaLang'){ hasData = true; break; } }
+      if(!hasData){
+        var data = JSON.parse(decodeURIComponent(m[1]));
+        Object.keys(data).forEach(function(k){
+          if(k.indexOf('draftArena')===0 && typeof data[k]==='string') localStorage.setItem(k, data[k]);
+        });
+      }
+    } catch(e){}
+    history.replaceState(null, '', location.pathname + location.search);
+  })();
+</script>
+<script>
+  // Langue (voir core/i18n.js) : à la première visite, la langue du navigateur choisit la page (fr, en
+  // ou es, anglais par défaut) ; ensuite, le choix fait dans les Paramètres est mémorisé. Les robots des
+  // moteurs de recherche et des aperçus de liens ne sont jamais redirigés : chaque langue est indexée à
+  // sa propre adresse.
+  (function(){
+    try {
+      if(/bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|discord|whatsapp|telegram/i.test(navigator.userAgent)) return;
+      var page = document.documentElement.lang, want = localStorage.getItem('draftArenaLang');
+      if(!want){
+        if(page !== 'fr') return;
+        var list = navigator.languages || [navigator.language || ''];
+        for(var i=0;i<list.length && !want;i++){ var c = (list[i]||'').slice(0,2).toLowerCase(); if(c==='fr'||c==='en'||c==='es') want = c; }
+        want = want || 'en';
+      }
+      if(want === page || !/^(fr|en|es)$/.test(want)) return;
+      var m = location.pathname.match(/^(.*?\/)(?:(?:en|es)\/)?([^\/]*)$/);
+      if(m) location.replace(m[1] + (want==='fr' ? '' : want + '/') + m[2] + location.search + location.hash);
+    } catch(e){}
+  })();
+</script>
+</head>
+<body>
+<noscript><p style="max-width:520px;margin:40px auto;padding:0 20px;text-align:center;line-height:1.7;">Draft Mon runs entirely in your browser: enable JavaScript to draft your team and climb the Battle Tower.</p></noscript>
+<div class="app">
+  <div class="site-header">
+    <div class="header-actions">
+      <a class="header-icon-btn discord-btn" id="discordBtn" href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer" title="Join the Discord" aria-label="Join the Discord">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6605a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      </a>
+      <button class="header-icon-btn music-settings-btn" id="musicSettingsBtn" title="Settings"><i class="ph-bold ph-gear"></i></button>
+    </div>
+    <span class="site-logo">DRAFT MON</span>
+    <span class="site-subtitle">◆ BATTLE TOWER ◆</span>
+  </div>
+
+  <div class="panel" id="screenMenu">
+    <div class="menu-hero">
+      <h1 class="menu-title"><img class="menu-banner" src="assets/image/logo/Draft_mon_banner.webp" alt="Draft Mon — Battle Tower, a free Pokémon roguelike browser game" width="1200" height="636" fetchpriority="high"></h1>
+      <button class="menu-splash" id="splashTextBtn">Gen 3 is here!!!</button>
+    </div>
+    <div class="menu-illustration" aria-hidden="true">
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="menuStairFill" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#3A2E48"/><stop offset=".55" stop-color="#262231"/><stop offset="1" stop-color="#181922"/>
+          </linearGradient>
+          <linearGradient id="menuStairFade" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".6" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".2"/>
+          </linearGradient>
+          <linearGradient id="menuStairFadeX" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity="1"/>
+          </linearGradient>
+          <mask id="menuStairMask" maskUnits="userSpaceOnUse" x="-100" y="-100" width="600" height="500"><rect x="0" y="0" width="400" height="300" fill="url(#menuStairFade)"/></mask>
+          <mask id="menuStairMaskX" maskUnits="userSpaceOnUse" x="-100" y="-100" width="600" height="500"><rect x="0" y="0" width="400" height="300" fill="url(#menuStairFadeX)"/></mask>
+        </defs>
+        <g mask="url(#menuStairMask)">
+          <g mask="url(#menuStairMaskX)">
+            <g id="menuStairScroll">
+              <path id="menuStairBody" fill="url(#menuStairFill)"/>
+              <path id="menuStairRisers" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+              <path id="menuStairTreads" fill="none" stroke="rgba(246,216,136,.34)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </g>
+        </g>
+        <g id="menuTrainer" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path id="menuLegB" stroke="#3F3253" stroke-width="9"/>
+          <rect id="menuShoeB" width="19" height="4" rx="2" fill="#241D2E" stroke="none"/>
+          <path id="menuLegA" stroke="#4A3B5F" stroke-width="9"/>
+          <rect id="menuShoeA" width="19" height="4" rx="2" fill="#241D2E" stroke="none"/>
+          <g id="menuBody">
+            <g id="menuChest">
+              <rect x="183" y="64" width="13" height="28" rx="4" fill="#E8B23D" fill-opacity=".7" stroke="none"/>
+              <path id="menuArmBack" stroke="#46385A" stroke-width="7"/>
+            </g>
+            <path d="M194 104L200 68" stroke="#55446A" stroke-width="17"/>
+            <g id="menuChestFront">
+              <path id="menuArmFront" stroke="#5E4C75" stroke-width="7"/>
+            </g>
+            <g id="menuHead">
+              <circle cx="204" cy="53" r="10" fill="#4A3B5C" stroke="none"/>
+              <path d="M192.5 52A11.5 11.5 0 0 1 215.5 52Z" fill="#E8B23D" stroke="none"/>
+              <rect x="209" y="50" width="14" height="4" rx="2" fill="#E8B23D" stroke="none"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="menu-content">
+      <p class="menu-headline">Ready to climb the Tower?</p>
+      <p class="menu-tagline">A free Pokémon roguelike you can play right in your browser: draft 6 Pokémon, prepare your team and climb the Battle Tower.</p>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:22px 0;">
+        <button class="btn" id="menuPlayBtn">▶ Play</button>
+        <button class="btn secondary" id="scoreBtn"><i class="ph-bold ph-trophy"></i> Score</button>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;">
+        <button class="btn secondary" id="menuDexBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-book-open"></i> Pokédex</button>
+        <button class="btn secondary" id="menuTeamBuilderBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-wrench"></i> Team Builder</button>
+        <button class="btn secondary" id="menuPatchNotesBtn" style="font-size:13px;padding:10px 16px;"><i class="ph-bold ph-clipboard-text"></i> Patch notes</button>
+        <div id="menuTokensBadge" class="menu-tokens-pill" data-nosnippet><i class="ph-bold ph-ticket"></i> 0 Tower Tokens</div>
+        <div id="menuCandyBadge" class="menu-tokens-pill" data-nosnippet><i class="ph-bold ph-cookie"></i> 0 Affinity Candies</div>
+      </div>
+      <div class="menu-howto-card">
+        <h2 class="floor-label" style="font-size:11px;font-weight:inherit;letter-spacing:3px;margin:0 0 10px;color:var(--accent-light);">▸ How to play ◂</h2>
+        <ol style="font-size:13px;color:var(--text-main);opacity:.85;line-height:1.8;text-align:left;list-style:none;margin:0;padding:0;">
+          <li>1. Draft 6 Pokémon: pick 1 card out of 3, six times.</li>
+          <li>2. Prepare your team: nature, EVs, ability, moves.</li>
+          <li>3. Climb the Battle Tower, floor by floor.</li>
+          <li>4. Every 5 floors, face a Mini-Boss.</li>
+          <li>5. Every 10 floors, beat a Type Master to earn their Badge.</li>
+          <li>6. Watch out for surprises: double battles and events between floors.</li>
+          <li>7. After each Boss and Mini-Boss, stop at the Camp: Pokémon Center, Poké Mart and Ranch.</li>
+          <li>8. Sometimes a rare visitor sets up at the Camp: the Traveling Merchant or the Safari.</li>
+          <li>9. Earn affinity candies by beating trainers and catching Pokémon at the Safari.</li>
+          <li>10. Give your candies to the Professor to see your favorite Pokémon more often in the draft.</li>
+          <li>11. Every defeat earns Tower Tokens based on your progress, to spend on Starting Boosts.</li>
+        </ol>
+      </div>
+      <section class="menu-about">
+        <h2>A free Pokémon roguelike, no download needed</h2>
+        <p>Draft Mon is a Pokémon fan game you play online, right in your browser, on computer or phone. Every run is different: the draft gives you an unexpected team, and the Battle Tower gets harder with every floor.</p>
+        <p>Over 1000 Pokémon from Kanto to Paldea, Mega Evolution, Z-Moves, Dynamax and Terastallization, three difficulty levels and a Team Builder compatible with Pokémon Showdown. No account, no ads.</p>
+      </section>
+      <p class="menu-note"><i class="ph-bold ph-paint-brush"></i> Draft Mon is still in beta: the logo and banner are temporary AI-generated images. Are you an artist who'd like to offer your services? Drop by the <a href="https://discord.gg/Z7jt9j4ch4" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+      <nav class="menu-links" aria-label="Site pages">
+        <a href="en/guide.html">Game guide</a>
+        <a href="en/faq.html">FAQ</a>
+        <a href="en/notes-de-mise-a-jour.html">Patch notes</a>
+        <a href="confidentialite.html">Privacy</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenDex">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg-panel);z-index:10;">
+      <button class="btn" id="dexBackBtn" style="padding:8px 16px;font-size:11px;flex-shrink:0;width:auto;">← Menu</button>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:var(--font-display);font-size:13px;color:var(--accent-light);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">POKÉDEX</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="dexCount">151 Pokémon</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;padding:10px;background:var(--bg-card);border:1px solid var(--line);border-radius:4px;">
+      <input id="dexSearch" type="text" placeholder="Search a name..." style="flex:1;min-width:150px;background:#0b0b10;border:1px solid var(--line-bright);color:var(--text-main);border-radius:3px;padding:6px 10px;font-family:inherit;font-size:12px;">
+      <div id="dexTypeFilter" style="min-width:150px;"></div>
+      <div id="dexTypeFilter2" style="min-width:150px;"></div>
+      <div id="dexRarityFilter" style="min-width:150px;"></div>
+      <button class="btn secondary" id="dexBoostedFilter" style="padding:6px 12px;font-size:11px;"><i class="ph-bold ph-heart"></i> Boosted</button>
+      <button class="btn secondary" id="dexResetFilter" style="padding:6px 12px;font-size:11px;"><i class="ph-bold ph-x"></i> Reset</button>
+    </div>
+    <div class="draft-cards" id="dexGrid"></div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenTeamBuilder">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg-panel);z-index:10;">
+      <button class="btn" id="tbBackBtn" style="padding:8px 16px;font-size:11px;flex-shrink:0;width:auto;">← Menu</button>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:var(--font-display);font-size:13px;color:var(--accent-light);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">TEAM BUILDER</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="tbSub"></div>
+      </div>
+    </div>
+    <div id="tbRoot"></div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenDraft">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <button class="btn secondary" id="draftHomeBtn" style="padding:6px 12px;font-size:12px;"><i class="ph-bold ph-house"></i> Menu</button>
+      <div class="draft-progress" id="draftProgress" style="margin:0;"></div>
+      <div style="width:80px;"></div>
+    </div>
+    <div class="draft-team-strip" id="draftTeamStrip"></div>
+    <div class="sub" id="draftSub">Choose a Pokémon for your team (1/6)</div>
+    <div id="draftRerollWrap" style="text-align:center;margin-bottom:6px;"></div>
+    <div class="draft-cards" id="draftCards"></div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenBuilder">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <button class="btn secondary" id="builderHomeBtn" style="padding:6px 12px;font-size:12px;"><i class="ph-bold ph-house"></i> Menu</button>
+      <div class="sub" style="margin:0;">Set up each Pokémon — then confirm your team.</div>
+      <div style="width:80px;"></div>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+    <div class="editor hidden" id="editor"></div>
+    <div style="text-align:center;margin-top:16px;">
+      <button class="btn" id="validateTeamBtn" disabled>Confirm the team and enter the tower</button>
+    </div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenTower">
+    <div class="tower-floor">
+      <div class="floor-label">BATTLE TOWER</div>
+      <div class="floor-num" id="floorNum">1</div>
+      <div class="floor-label" id="floorDesc">A trainer awaits you...</div>
+      <div class="currency-row" style="margin-top:10px;">
+        <span class="currency-pill cp-money"><span class="cp-icon"><i class="ph-bold ph-coins"></i></span><span id="floorMoneyVal">0</span></span>
+        <span class="currency-pill cp-candy"><span class="cp-icon"><i class="ph-bold ph-cookie"></i></span><span id="floorCandyVal">0</span></span>
+      </div>
+      <div class="dex-rate" id="floorReward" style="margin-top:8px;color:var(--good);"></div>
+      <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn" id="fightBtn">Fight</button>
+        <button class="btn secondary" id="towerBagBtn"><i class="ph-bold ph-backpack"></i> Bag</button>
+        <button class="btn secondary" id="towerTeamBtn"><i class="ph-bold ph-users"></i> Team</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenVillage">
+    <div class="village-topbar">
+      <div>
+        <div class="floor-label" style="letter-spacing:4px;font-size:12px;color:var(--accent);"><i class="ph-bold ph-tent"></i> CAMP</div>
+        <div class="dex-rate" id="villageReward" style="color:var(--good);margin-top:4px;"></div>
+        <div class="dex-rate" id="villageBadge" style="color:var(--accent);margin-top:2px;"></div>
+      </div>
+      <div class="village-topbar-right">
+        <div class="currency-row" id="villageMoney">
+          <span class="currency-pill cp-money"><span class="cp-icon"><i class="ph-bold ph-coins"></i></span><span id="villageMoneyVal">0</span></span>
+          <span class="currency-pill cp-candy"><span class="cp-icon"><i class="ph-bold ph-cookie"></i></span><span id="villageCandyVal">0</span></span>
+        </div>
+        <button class="village-hamburger-btn" id="villageHamburgerBtn" aria-label="Menu"><i class="ph-bold ph-list"></i></button>
+        <div class="village-hamburger-menu hidden" id="villageHamburgerMenu">
+          <button class="btn secondary" id="villageMenuTeamBtn"><i class="ph-bold ph-users"></i> Edit team</button>
+          <button class="btn secondary" id="villageMenuBagBtn"><i class="ph-bold ph-backpack"></i> Bag</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="village-map" id="villageMap">
+      <!-- Fond : on est À L'INTÉRIEUR de la Tour de Combat (immense salle, pas un décor extérieur) —
+           piliers de pierre sur les côtés, arc de pierre en fond, plafond perdu dans le noir en
+           haut plutôt qu'un ciel. Watchtour, arche d'entrée, bannières et torches en décor. Tout en
+           arrière-plan (z-index sous les bâtiments), non cliquable. -->
+      <div class="village-arch-bg" aria-hidden="true"></div>
+      <div class="village-pillar vp-outer-l" aria-hidden="true"></div>
+      <div class="village-pillar vp-inner-l" aria-hidden="true"></div>
+      <div class="village-pillar vp-inner-r" aria-hidden="true"></div>
+      <div class="village-pillar vp-outer-r" aria-hidden="true"></div>
+      <div class="village-torch" style="left:8%;" aria-hidden="true"><span class="vt-flame"></span></div>
+      <div class="village-torch" style="left:22%;" aria-hidden="true"><span class="vt-flame"></span></div>
+      <div class="village-torch" style="left:78%;" aria-hidden="true"><span class="vt-flame"></span></div>
+      <div class="village-torch" style="left:92%;" aria-hidden="true"><span class="vt-flame"></span></div>
+      <div class="village-banner-string" aria-hidden="true">
+        <span class="village-banner" style="left:22%;animation-delay:-.4s;"></span>
+        <span class="village-banner" style="left:36%;animation-delay:-1.6s;"></span>
+        <span class="village-banner" style="left:50%;animation-delay:-.9s;"></span>
+        <span class="village-banner" style="left:64%;animation-delay:-2.3s;"></span>
+        <span class="village-banner" style="left:78%;animation-delay:-1.1s;"></span>
+      </div>
+      <div class="village-watchtower" aria-hidden="true">
+        <span class="vw-leg vw-leg-l"></span><span class="vw-leg vw-leg-r"></span>
+        <span class="vw-platform"></span><span class="vw-roof"></span>
+      </div>
+      <div class="village-decor vd-tent vd-tent-back" style="--vb-x:16%;--vb-y:52%;" aria-hidden="true"></div>
+      <div class="village-decor vd-tent vd-tent-back" style="--vb-x:86%;--vb-y:48%;" aria-hidden="true"></div>
+      <div class="village-mist" aria-hidden="true"></div>
+      <div class="village-sky">
+        <div class="village-ember ve1"></div>
+        <div class="village-ember ve2"></div>
+        <div class="village-ember ve3"></div>
+        <div class="village-ember-tall vet1"></div>
+        <div class="village-ember-tall vet2"></div>
+        <div class="village-ember-tall vet3"></div>
+        <div class="village-ember-tall vet4"></div>
+      </div>
+      <div class="village-ground"></div>
+
+      <!-- Sentiers battus qui convergent vers le feu de camp depuis chaque bâtiment -->
+      <div class="village-path" style="--vb-x:12%;--vb-y:78%;width:190px;transform:translate(-50%,-50%) rotate(-8deg);"></div>
+      <div class="village-path" style="--vb-x:36%;--vb-y:82%;width:150px;transform:translate(-50%,-50%) rotate(8deg);"></div>
+      <div class="village-path" style="--vb-x:64%;--vb-y:82%;width:150px;transform:translate(-50%,-50%) rotate(-8deg);"></div>
+      <div class="village-path" style="--vb-x:88%;--vb-y:76%;width:190px;transform:translate(-50%,-50%) rotate(8deg);"></div>
+
+      <!-- Détails de camp : coin tente (sac de couchage + caisse juste à côté), plus quelques
+           éléments épars entre les bâtiments, jusque vers le haut de la scène, pour qu'elle ne
+           paraisse pas vide. Les 6 bûches autour du feu sont générées par renderVillageTeamRing
+           (une par emplacement d'équipe, occupée ou non). -->
+      <div class="village-decor vd-tent" style="--vb-x:78%;--vb-y:93%;" aria-hidden="true">
+        <span class="vd-tent-flap"></span>
+      </div>
+      <div class="village-decor vd-bedroll" style="--vb-x:84%;--vb-y:89%;" aria-hidden="true"></div>
+      <div class="village-decor vd-crate" style="--vb-x:71%;--vb-y:90%;" aria-hidden="true"></div>
+      <div class="village-decor vd-rock" style="--vb-x:24%;--vb-y:60%;" aria-hidden="true"></div>
+      <div class="village-decor vd-bush" style="--vb-x:29%;--vb-y:64%;" aria-hidden="true"></div>
+      <div class="village-decor vd-bush" style="--vb-x:50%;--vb-y:45%;" aria-hidden="true"></div>
+      <div class="village-decor vd-rock" style="--vb-x:75%;--vb-y:55%;" aria-hidden="true"></div>
+      <div class="village-decor vd-bush" style="--vb-x:80%;--vb-y:50%;" aria-hidden="true"></div>
+      <div class="village-decor vd-crate" style="--vb-x:47%;--vb-y:30%;" aria-hidden="true"></div>
+
+      <div class="village-team-ring" id="villageTeamRing" aria-hidden="true"></div>
+      <div class="village-campfire" style="--vb-x:48%;--vb-y:90%;" aria-hidden="true">
+        <span class="vc-glow"></span>
+        <span class="vc-flame"><i class="ph-bold ph-flame"></i></span>
+      </div>
+
+      <!-- Ranch : enclos + petite grange, contient les 3 Pokémon sauvages proposés -->
+      <button class="village-building village-b-ranch" id="villageRanchBtn" style="--vb-x:12%;--vb-y:78%;">
+        <span class="vbd-fence"></span>
+        <span class="vbd-fence-rail"></span>
+        <span class="vbd-barn-body"></span>
+        <span class="vbd-barn-roof"></span>
+        <span class="vb-label">Ranch</span>
+      </button>
+      <div class="village-ranch-pen" id="villageRanchPen" style="--vb-x:12%;--vb-y:80%;" aria-hidden="true"></div>
+
+      <!-- Centre Pokémon : toit rouge pointu + emblème Poké Ball -->
+      <button class="village-building village-b-center" id="villagePokecentreBtn" style="--vb-x:36%;--vb-y:82%;">
+        <span class="vbd-body"></span>
+        <span class="vbd-roof vbd-roof-red"></span>
+        <span class="vbd-emblem vbd-pokeball"><span class="vbd-pokeball-band"></span><span class="vbd-pokeball-center"></span></span>
+        <span class="vb-label">Pokémon Center</span>
+      </button>
+
+      <!-- Poké Mart : toit bleu + badge "M" -->
+      <button class="village-building village-b-mart" id="villagePokeshopBtn" style="--vb-x:64%;--vb-y:82%;">
+        <span class="vbd-body"></span>
+        <span class="vbd-roof vbd-roof-blue"></span>
+        <span class="vbd-awning-stripes"></span>
+        <span class="vbd-emblem vbd-mart-badge">M</span>
+        <span class="vb-label">Poké Mart</span>
+      </button>
+
+      <!-- Marchand itinérant : stand (comptoir + auvent), présence aléatoire -->
+      <button class="village-building hidden village-b-merchant" id="villageMerchantBtn" style="--vb-x:88%;--vb-y:76%;">
+        <span class="vbd-stall-pole vbd-pole-l"></span>
+        <span class="vbd-stall-pole vbd-pole-r"></span>
+        <span class="vbd-stall-counter"></span>
+        <span class="vbd-stall-awning"></span>
+        <span class="vb-label">Merchant</span>
+      </button>
+
+      <!-- Maison Safari : portique d'entrée en bois, présence aléatoire (indépendante du Marchand) -->
+      <button class="village-building hidden village-b-safari" id="villageSafariBtn" style="--vb-x:50%;--vb-y:36%;">
+        <span class="vbd-gate-post vbd-post-l"></span>
+        <span class="vbd-gate-post vbd-post-r"></span>
+        <span class="vbd-gate-beam"></span>
+        <span class="vbd-gate-sign"><i class="ph-bold ph-leaf"></i></span>
+        <span class="vb-label">Safari House</span>
+      </button>
+    </div>
+
+    <div class="village-panel-overlay hidden" id="villagePanelOverlay">
+      <div class="village-panel-card">
+        <button class="patchnotes-close" id="villagePanelCloseBtn"><i class="ph-bold ph-x"></i></button>
+        <div id="villagePanelContent"></div>
+      </div>
+    </div>
+
+    <div class="village-bottombar">
+      <button class="btn" id="villageContinueBtn">▶ Continue to the Tower</button>
+    </div>
+  </div>
+
+
+  <div class="panel hidden" data-nosnippet id="screenEvent">
+    <div style="text-align:center;margin-bottom:16px;">
+      <div class="floor-label" style="letter-spacing:4px;font-size:12px;color:var(--accent);" id="eventTitle"><i class="ph-bold ph-question"></i> EVENT</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--line);border-radius:4px;padding:18px;text-align:center;max-width:440px;margin:0 auto 20px;">
+      <div style="font-size:24px;margin-bottom:8px;" id="eventEmoji"><i class="ph-bold ph-question"></i></div>
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6;" id="eventFlavor"></div>
+      <div id="eventActions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"></div>
+      <div class="dex-rate" id="eventOutcome" style="margin-top:12px;color:var(--good);"></div>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn hidden" id="eventContinueBtn">▶ Continue to the Tower</button>
+    </div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenBattle">
+    <div class="battle-arena-fog fog1" aria-hidden="true"></div>
+    <div class="battle-arena-fog fog2" aria-hidden="true"></div>
+    <div class="battle-arena-fog fog3" aria-hidden="true"></div>
+    <div class="battle-arena-floor" aria-hidden="true"></div>
+    <div class="battle-topbar">
+      <button class="btn secondary" id="battleHomeBtn" style="width:auto;flex-shrink:0;min-height:0;padding:10px 16px;font-size:12px;"><i class="ph-bold ph-list"></i> Menu</button>
+      <div class="trainer-banner" id="trainerBanner"></div>
+    </div>
+    <div class="side-row battle-trackers">
+      <div class="bench" id="playerBench"></div>
+      <div class="bench" id="foeBench"></div>
+    </div>
+    <div class="dex-rate" id="weatherBanner" style="text-align:center;margin-bottom:8px;font-size:11px;color:var(--accent);"></div>
+    <div class="battle-main">
+    <div class="battle-field">
+      <div class="vsfield">
+        <div class="combatant-row">
+          <div class="combatant you" id="playerBox">
+            <div class="sprite" id="playerSprite"><i class="ph-bold ph-question"></i></div>
+            <div class="name-row"><b id="playerName">—</b><span class="type-badges-row" id="playerType"></span></div>
+            <div class="hpbar-track"><div class="hpbar-fill" id="playerHpFill"></div></div>
+            <div class="hp-text" id="playerHpText">HP</div>
+          </div>
+          <div class="combatant you hidden" id="player2Box">
+            <div class="sprite" id="player2Sprite"><i class="ph-bold ph-question"></i></div>
+            <div class="name-row"><b id="player2Name">—</b><span class="type-badges-row" id="player2Type"></span></div>
+            <div class="hpbar-track"><div class="hpbar-fill" id="player2HpFill"></div></div>
+            <div class="hp-text" id="player2HpText">HP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="battle-controls">
+      <div class="combatant-row foe-row-top-right">
+        <div class="combatant foe" id="foeBox">
+          <div class="name-row"><b id="foeName">—</b><span class="type-badges-row" id="foeType"></span></div>
+          <div class="hpbar-track"><div class="hpbar-fill" id="foeHpFill"></div></div>
+          <div class="hp-text" id="foeHpText">HP</div>
+          <div class="sprite" id="foeSprite"><i class="ph-bold ph-question"></i></div>
+        </div>
+        <div class="combatant foe hidden" id="foe2Box">
+          <div class="name-row"><b id="foe2Name">—</b><span class="type-badges-row" id="foe2Type"></span></div>
+          <div class="hpbar-track"><div class="hpbar-fill" id="foe2HpFill"></div></div>
+          <div class="hp-text" id="foe2HpText">HP</div>
+          <div class="sprite" id="foe2Sprite"><i class="ph-bold ph-question"></i></div>
+        </div>
+      </div>
+      <div class="battle-hud-bottom">
+      <div class="log" id="log"></div>
+      <div class="battle-hud-row">
+        <div class="mechanics-col" id="mechanicsGrid"></div>
+        <div class="moves-panel">
+          <div class="moves-panel-actions" id="movesPanelActions">
+            <button class="hud-icon-btn" id="battleActionsToggleBtn" aria-label="Other actions"><i class="ph-bold ph-list"></i></button>
+            <div class="moves-panel-actions-revealed hidden" id="movesPanelActionsRevealed">
+              <button class="btn secondary" id="manualSwitchBtn" style="width:auto;flex-shrink:0;min-height:0;padding:8px 12px;font-size:11px;"><i class="ph-bold ph-arrows-clockwise"></i> Switch Pokémon</button>
+              <button class="btn secondary" id="bagBtn" style="width:auto;flex-shrink:0;min-height:0;padding:8px 12px;font-size:11px;"><i class="ph-bold ph-backpack"></i> Bag</button>
+            </div>
+            <button class="btn secondary hidden" id="cancelSwitchBtn" style="width:auto;flex-shrink:0;min-height:0;padding:8px 12px;font-size:11px;">Cancel</button>
+          </div>
+          <div class="moves-header hidden" id="movesHeader"></div>
+          <div class="moves" id="movesGrid"></div>
+          <div class="switch-grid hidden" id="switchGrid"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="panel hidden" data-nosnippet id="screenEnd">
+    <div class="tower-floor">
+      <div class="floor-label" id="endLabel">GAME OVER</div>
+      <div class="floor-num" id="endFloor">1</div>
+      <div class="floor-label">floors cleared</div>
+      <div class="floor-label" id="endTokensLabel" style="margin-top:10px;color:var(--accent);font-size:10px;"></div>
+    </div>
+    <div id="endSummary" style="margin-top:6px;padding:0 16px;"></div>
+    <div style="margin-top:20px;text-align:center;padding-bottom:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" id="restartBtn">Start a new draft</button>
+      <button class="btn secondary" id="endMenuBtn"><i class="ph-bold ph-house"></i> Back to menu</button>
+    </div>
+  </div>
+</div>
+
+
+<script defer src="i18n/en.js"></script>
+<script defer src="core/i18n.js"></script>
+<script defer src="core/rng.js"></script>
+<script defer src="core/type-chart.js"></script>
+<script defer src="core/natures.js"></script>
+<script defer src="core/stats.js"></script>
+<script defer src="core/state.js"></script>
+<script defer src="meta/rewards.js"></script>
+<script defer src="meta/affinity.js"></script>
+<script defer src="items/items.js"></script>
+<script defer src="moves/moves.js"></script>
+<script defer src="pokemon/gen1.js"></script>
+<script defer src="pokemon/gen2.js"></script>
+<script defer src="pokemon/gen3.js"></script>
+<script defer src="pokemon/gen4.js"></script>
+<script defer src="pokemon/gen5.js"></script>
+<script defer src="pokemon/gen6.js"></script>
+<script defer src="pokemon/gen7.js"></script>
+<script defer src="pokemon/gen8.js"></script>
+<script defer src="pokemon/gen9.js"></script>
+<script defer src="pokemon/legends-arceus.js"></script>
+<script defer src="pokemon/index.js"></script>
+<script defer src="pokemon/abilities.js"></script>
+<script defer src="pokemon/forms.js"></script>
+<script defer src="pokemon/helpers.js"></script>
+<script defer src="pokemon/weights.js"></script>
+<script defer src="pokemon/competitive-sets.js"></script>
+<script defer src="pokemon/smogon-sets.js"></script>
+<script defer src="pokemon/showdown-names.js"></script>
+<script defer src="draft/draft-core.js"></script>
+<script defer src="draft/draft-classic.js"></script>
+<script defer src="draft/draft-facile.js"></script>
+<script defer src="combat/tower.js"></script>
+<script defer src="combat/tower-events.js"></script>
+<script defer src="combat/pp-system.js"></script>
+<script defer src="combat/damage-calc.js"></script>
+<script defer src="combat/status-effects.js"></script>
+<script defer src="combat/ai-foe.js"></script>
+<script defer src="combat/zmoves.js"></script>
+<script defer src="combat/dynamax.js"></script>
+<script defer src="combat/terastallize.js"></script>
+<script defer src="combat/megaevolution.js"></script>
+<script defer src="combat/battle-flow.js"></script>
+<script defer src="combat/battle-ui.js"></script>
+<script defer src="combat/move-fx.js"></script>
+<script defer src="village/village-core.js"></script>
+<script defer src="village/pokecenter.js"></script>
+<script defer src="village/pc-storage.js"></script>
+<script defer src="village/shop.js"></script>
+<script defer src="village/ranch.js"></script>
+<script defer src="village/merchant.js"></script>
+<script defer src="village/safari.js"></script>
+<script defer src="save/save-system.js"></script>
+<script defer src="ui/editor.js"></script>
+<script defer src="ui/dropdowns.js"></script>
+<script defer src="ui/screens.js"></script>
+<script defer src="ui/menu-stairs.js"></script>
+<script defer src="ui/music.js"></script>
+<script defer src="ui/bag-modal.js"></script>
+<script defer src="ui/dex-viewer.js"></script>
+<script defer src="ui/patch-notes.js"></script>
+<script defer src="ui/team-builder.js"></script>
+<script defer src="ui/tab-title.js"></script>
+<script>
+  // Outils de développement : fichier local non versionné (*.local.js dans .gitignore), chargé seulement
+  // en local (localhost, réseau privé, file://) pour ne pas provoquer d'erreur 404 en ligne.
+  (function(){
+    var h = location.hostname;
+    var isLocal = location.protocol === 'file:' || /^(localhost|127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h) || /\.local$/.test(h);
+    if(isLocal) document.write('<script defer src="ui/dev-mode.local.js"><\/script>');
+  })();
+</script>
+</body>
+</html>

@@ -295,6 +295,7 @@ ui: {
 "Carte de fidélité Or": "Gold Loyalty Card",
 "Centre Pokémon": "Pokémon Center",
 "Ces champignons étaient toxiques ! {0}{1}": "Those mushrooms were poisonous! {0}{1}",
+"Cette Méga-Évolution n'a pas encore de talent officiel : elle garde le talent de base du Pokémon.": "This Mega Evolution has no official ability yet: it keeps the Pokémon's base ability.",
 "Cette attaque est deux fois plus efficace si l’ennemi a déjà été blessé durant ce tour.": "This attack is twice as effective if the foe has already been hurt this turn.",
 "Cette attaque est deux fois plus puissante lorsque l’ennemi a moins de la moitié de ses PV.": "This attack is twice as powerful when the foe has less than half of its HP.",
 "Cette capacité ne peut pas être utilisée. Il est recommandé de l’oublier, même s’il sera impossible de se la remémorer une fois oubliée.": "This move can't be used. It's best to forget it, even though it can never be remembered once forgotten.",

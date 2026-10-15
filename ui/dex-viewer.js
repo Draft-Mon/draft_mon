@@ -298,7 +298,8 @@ function openDexDetail(line, stageIdx, branchIdx, initialForm){
     if(viewForm==='gigamax') return { name:`${sp.name} Gigamax`, types:sp.types, base:sp.base, abilities:baseAbilities, spriteId:gigamaxSpriteId, spriteName:sp.name };
     if(viewForm!=='base' && sp.forms && sp.forms[viewForm]){
       const f = sp.forms[viewForm];
-      return { name:f.name, types:f.types, base:f.base, abilities:f.abilities||baseAbilities, spriteId:null, spriteName:f.name };
+      // Méga sans talent officiel connu (pas de champ abilities) : elle garde le talent de base du Pokémon.
+      return { name:f.name, types:f.types, base:f.base, abilities:f.abilities||baseAbilities, noOfficialAbility:!f.abilities, spriteId:null, spriteName:f.name };
     }
     return { name:sp.name, types:sp.types, base:sp.base, abilities:baseAbilities, spriteId:null, spriteName:sp.name };
   }
@@ -372,6 +373,7 @@ function openDexDetail(line, stageIdx, branchIdx, initialForm){
       <div class="editor-section">
         <div class="editor-section-title">Talents</div>
         <div style="display:flex;flex-direction:column;gap:6px;">
+          ${v.noOfficialAbility ? `<div class="effect-desc" style="font-style:italic;">Cette Méga-Évolution n'a pas encore de talent officiel : elle garde le talent de base du Pokémon.</div>` : ''}
           ${v.abilities.map(a=>`<div><b style="color:var(--text-main);font-size:11px;">${a}</b><div class="effect-desc" style="margin-top:2px;">${ABILITY_DESC[a]||''}</div></div>`).join('')}
         </div>
       </div>
